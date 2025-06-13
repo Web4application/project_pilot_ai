@@ -11,3 +11,6 @@ dashboard:
 
 cert:
     @powershell -ExecutionPolicy Bypass -File extensions\cert_automation\auto_cert.ps1
+
+nmake /f Makefile.win install
+nmake /f Makefile.win cert
