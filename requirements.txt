@@ -7,6 +7,3 @@ PyGithub
 fastapi
 uvicorn
 cryptography
-# Dev & linting tools
-flake8
-psutil
