@@ -7,3 +7,7 @@ PyGithub
 fastapi
 uvicorn
 cryptography
+pip install .
+# or with optional extras:
+pip install .[dev]
+pip install .[dashboard]
