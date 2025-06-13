@@ -1,0 +1,50 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Certs & secrets
+*.pfx
+*.cer
+*.key
+*.pem
+*.csr
+logs/
+*.log
+
+# Task Scheduler exports
+*.xml
+
+# Environment files
+.env
+.env.*
+
+# OS metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# VSCode and IDE settings
+.vscode/
+.idea/
+
+# Streamlit cache
+.streamlit/
+
+# Bytecode + backups
+*.bak
+*.swp
+*.swo
+*~
+
+# Docker and runtime files
+*.pid
+
+# Ignore local dashboards if customized
+extensions/cert_dashboard/__pycache__/
