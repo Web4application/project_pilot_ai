@@ -1,0 +1,21 @@
+# Auto normalize text files
+* text=auto
+
+# Explicit line ending settings
+*.py text eol=lf
+*.ps1 text eol=crlf
+*.sh text eol=lf
+
+# Treat env files as sensitive config (prevent accidental diff noise)
+.env* text eol=lf linguist-generated
+
+# Binary files - don't diff
+*.pfx binary
+*.cer binary
+*.pdf binary
+*.png binary
+*.jpg binary
+*.zip binary
+
+# Ignore logs in diff highlights
+logs/** linguist-generated
