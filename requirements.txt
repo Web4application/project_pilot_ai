@@ -1,0 +1,12 @@
+# Core orchestration and backend dependencies
+openai
+requests
+httpx
+python-dotenv
+PyGithub
+fastapi
+uvicorn
+cryptography
+# Dev & linting tools
+flake8
+psutil
