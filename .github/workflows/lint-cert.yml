@@ -1,0 +1,20 @@
+name: Cert Automation Lint & Check
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    - name: Install dependencies
+      run: pip install flake8 cryptography
+    - name: Python lint
+      run: flake8 extensions/cert_dashboard/
+    - name: Expiry check
+      run: |
+        python -c "from extensions.cert_dashboard.cert_status import check_cert_status; check_cert_status('certs/DeviceCert.cer')"
