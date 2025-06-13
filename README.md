@@ -3,14 +3,27 @@
 **Automated AI-Powered Project Management & Code Intelligence**
 
 ---
+## 🔐 Certificate Automation & Dashboard
+
+ProjectPilotAI now includes automated SSL certificate generation and rebinding via PowerShell + a real-time certificate monitoring dashboard built with Streamlit.
+
+### 📁 Folder Structure
+
+- `extensions/cert_automation/`: PowerShell script & task definition
+- `extensions/cert_dashboard/`: Certificate health monitor UI
+
+
+### ⚙️ Commands
+  To run the cert dashboard locally:
+
+    cd extensions/cert_dashboard
+    streamlit run app.py
 
 ## Overview
 
 ProjectPilotAI is a cutting-edge AI automation framework designed to transform how software projects are managed, analyzed, and maintained. It leverages state-of-the-art large language models (LLMs) to extract actionable tasks from meeting transcripts, analyze repository health, and automate GitHub issue tracking — all seamlessly orchestrated to turbocharge your development workflow.
 
 Built with modularity and scalability in mind, ProjectPilotAI integrates easily as a standalone toolkit or within broader AI platforms such as **RODAAI** and **Script Analyzer Bot**.
-
----
 
 ## Features
 
