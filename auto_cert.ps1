@@ -44,3 +44,23 @@ try {
 }
 
 Log "📁 Log saved to: $LogPath"
+# Log structured event
+$eventLogPath = "$ScriptDir\cert_events.json"
+
+$logData = @{
+    timestamp = (Get-Date).ToString("o")
+    issued_dns = $targets
+    root_ca = $root.Subject
+    cert_files = Get-ChildItem -Path $OutPath -Filter *.pfx | Select-Object -ExpandProperty Name
+    status = "success"
+}
+
+if (Test-Path $eventLogPath) {
+    $existing = Get-Content $eventLogPath | ConvertFrom-Json
+    $all = $existing + $logData
+} else {
+    $all = @($logData)
+}
+
+$all | ConvertTo-Json -Depth 5 | Set-Content $eventLogPath -Encoding UTF8
+
