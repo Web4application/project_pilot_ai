@@ -1,9 +1,0 @@
-rootProject.name = "projectPilotAI"
-
-include("remote-robot")
-include("robot-server-plugin")
-include("ui-test-example")
-include("remote-fixtures")
-include("ide-launcher")
-include("robot-server-core")
-include("test-recorder")
