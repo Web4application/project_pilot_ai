@@ -7,6 +7,6 @@ openssl req -x509 -newkey rsa:2048 \
   -out server.crt \
   -days 365 \
   -nodes \
-  -subj "/C=NG/ST=Lagos/L=Ikeja/O=Fadaka Blockchain/OU=Node Network/CN=localhost/emailAddress=dev@fadaka.org"
+  -subj "/C=NG/ST=Lagos/L=Ikeja/O=Fadaka Blockchain/OU=Node Network/CN=localhost/kubulee.kl@gmail.com=dev@fadaka.org"
 
 echo "✅ TLS certificate (server.crt) and key (server.key) created."
