@@ -1,58 +1,43 @@
-# Ignore Python virtual environments
-venv/
-.env/
-.env.*
-
-# Ignore IDE/project files
-.idea/
-.vscode/
-*.code-workspace
-
-# Bytecode and cache
+# Python
 __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
-
-# Logs
+*.db
+*.sqlite3
 *.log
-logs/
-cert_log_*.log
 
-# Certificates
+# Environment
+.env
+.env.*
+venv/
+.venv/
+
+# IDEs
+.vscode/
+.idea/
+*.code-workspace
+
+# Certs + Logs
 certs/
 *.pfx
 *.cer
 *.pem
 *.key
+cert_log_*.log
 cert_events.json
 
-# OS artifacts
-.DS_Store
-Thumbs.db
-
-# Test output / compiled files
-*.out
-*.bin
-
-# Ignore local databases
-*.db
-*.sqlite3
-
-# Node.js (if using frontend)
+# Node/Frontend
 node_modules/
 dist/
 build/
 
-# Jupyter or notebook outputs
+# Jupyter
 *.ipynb_checkpoints
 
-# Coverage/test artifacts
+# Testing
 htmlcov/
 .coverage
 coverage.xml
-.tox/
 pytest_cache/
-
-# PyInstaller
-*.spec
+.tox/
