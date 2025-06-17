@@ -11,3 +11,6 @@ chmod +x .git/hooks/pre-commit
 
 cd extensions/cert_dashboard
 streamlit run app.py
+
+git clone https://github.com/Web4application/Web4AI_Project_Assistant.git
+cd Web4AI_Project_Assistant
