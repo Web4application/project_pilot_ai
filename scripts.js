@@ -362,3 +362,35 @@ architecture improvements, and warnings about structure or performance:\n\n${all
   report += `🏗️ Global Architecture Suggestions:\n${global.choices[0].message.content}`;
   document.getElementById("agentOutput").textContent = report;
 };
+
+let chatHistory = [
+  {
+    role: "system",
+    content: `You are an advanced AI software architect. You have access to a virtual codebase. 
+You will assist the user by answering questions, analyzing code, suggesting improvements, 
+refactors, test strategies, and architectural redesigns.
+
+Below is the full codebase:\n\n${Object.entries(files)
+  .map(([k, v]) => `File: ${k}\n${v}`)
+  .join("\n\n")}`
+  }
+];
+
+window.sendChat = async () => {
+  const input = document.getElementById("chatInput").value.trim();
+  if (!input) return;
+
+  chatHistory.push({ role: "user", content: input });
+
+  document.getElementById("chatLog").innerHTML += `<div><b>You:</b> ${input}</div>`;
+  document.getElementById("chatInput").value = "";
+
+  const res = await model.chat.completions.create({
+    messages: chatHistory,
+    stream: false
+  });
+
+  const reply = res.choices[0].message.content;
+  chatHistory.push({ role: "assistant", content: reply });
+  document.getElementById("chatLog").innerHTML += `<div><b>Agent:</b> ${reply}</div>`;
+};
