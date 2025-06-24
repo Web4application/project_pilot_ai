@@ -4,7 +4,6 @@ const tabs = document.querySelectorAll(".tab");
 const views = document.querySelectorAll(".view");
 const fileTree = document.getElementById("fileTree");
 const codeInput = document.getElementById("codeInput");
-
 let files = {};
 let model = null;
 let chatHistory = [];
@@ -29,16 +28,16 @@ document.getElementById("fileInput").addEventListener("change", async (e) => {
   renderTree(buildFileTree(files), fileTree);
 
   if (!model) {
-    const client = new ChatWorkerClient();
-    await client.reload("Llama-3-8B-Instruct-q4f32_1");
-    model = client;
+    model = new ChatWorkerClient();
+    await model.reload("Llama-3-8B-Instruct-q4f32_1");
   }
 
   chatHistory = [
     {
       role: "system",
-      content: `You are an AI software architect with access to this project:\n\n` +
-        Object.entries(files).map(([k, v]) => `File: ${k}\n${v}`).join("\n\n")
+      content: `You're a software architect. Here's the project:\n\n${Object.entries(files)
+        .map(([k, v]) => `File: ${k}\n${v}`)
+        .join("\n\n")}`
     }
   ];
 });
@@ -77,20 +76,21 @@ function renderTree(node, container) {
 function loadFile(name) {
   codeInput.value = files[name];
   ["summaryOutput", "refactorOutput", "testOutput"].forEach(id => {
-    document.getElementById(id).textContent = "⚡ Processing...";
+    const el = document.getElementById(id);
+    if (el) el.textContent = "⚡ Processing...";
   });
 }
 
-window.runLLM = async (prompt) => {
+window.runLLM = async (promptPrefix) => {
   const content = codeInput.value;
   const res = await model.chat.completions.create({
     messages: [
-      { role: "system", content: "You're a senior developer." },
-      { role: "user", content: `${prompt}\n\n${content}` }
+      { role: "system", content: "You are a senior software engineer." },
+      { role: "user", content: `${promptPrefix}\n\n${content}` }
     ],
     stream: false
   });
-  const target = prompt.includes("Summarize") ? "summaryOutput" : "refactorOutput";
+  const target = promptPrefix.includes("Summarize") ? "summaryOutput" : "refactorOutput";
   document.getElementById(target).textContent = res.choices[0].message.content;
 };
 
@@ -98,8 +98,8 @@ window.generateUnitTests = async () => {
   const content = codeInput.value;
   const res = await model.chat.completions.create({
     messages: [
-      { role: "system", content: "You're a test engineer." },
-      { role: "user", content: `Write unit tests for this code:\n\n${content}` }
+      { role: "system", content: "You're a QA engineer." },
+      { role: "user", content: `Generate unit tests:\n\n${content}` }
     ],
     stream: false
   });
@@ -110,8 +110,8 @@ window.generateGlobalSummary = async () => {
   const all = Object.entries(files).map(([k, v]) => `File: ${k}\n${v}`).join("\n\n");
   const res = await model.chat.completions.create({
     messages: [
-      { role: "system", content: "You're a technical analyst." },
-      { role: "user", content: `Summarize the project:\n\n${all}` }
+      { role: "system", content: "You're a senior project analyst." },
+      { role: "user", content: `Summarize the following project:\n\n${all}` }
     ],
     stream: false
   });
@@ -124,7 +124,7 @@ window.semanticSearch = () => {
     .filter(([_, content]) => content.toLowerCase().includes(query))
     .map(([name]) => `✅ ${name}`)
     .join("\n");
-  document.getElementById("searchResults").textContent = results || "❌ No matches.";
+  document.getElementById("searchResults").textContent = results || "❌ No matches found.";
 };
 
 window.startVoice = () => {
@@ -140,53 +140,51 @@ window.startVoice = () => {
 window.renderDependencyGraph = () => {
   let graph = "graph TD\n";
   for (const [name, content] of Object.entries(files)) {
-    const matches = [...content.matchAll(/(import|require|from)\s+['"]([^'"]+)['"]/g)];
-    matches.forEach(([, , dep]) => {
+    const matches = [...content.matchAll(/(?:import|require|from)\s+['"]([^'"]+)['"]/g)];
+    matches.forEach(([, dep]) => {
       graph += `"${name}" --> "${dep}"\n`;
     });
   }
   document.getElementById("graphContainer").textContent = graph;
-  mermaid.init(undefined, "#graphContainer");
+  if (window.mermaid) mermaid.init(undefined, "#graphContainer");
 };
 
 window.exportToPDF = () => {
-  html2pdf().from(document.body).save("project_report.pdf");
+  html2pdf().from(document.body).save("project_summary.pdf");
 };
 
 window.runAgentMode = async () => {
-  let report = "🧠 Agent Mode Report:\n\n";
-  document.getElementById("agentOutput").textContent = "🤖 Running analysis...";
+  document.getElementById("agentOutput").textContent = "🧠 Agent analyzing...";
+  let report = "";
 
   for (const [filename, content] of Object.entries(files)) {
-    const prompt = `Analyze the file "${filename}" for bugs, design issues, and improvements.\n\n${content}`;
+    const prompt = `Audit the file "${filename}" for code quality, patterns, risks, and improvements:\n\n${content}`;
     const result = await model.chat.completions.create({
       messages: [
-        { role: "system", content: "You're a senior architect." },
+        { role: "system", content: "You are an expert AI code reviewer." },
         { role: "user", content: prompt }
       ],
       stream: false
     });
     report += `📄 ${filename}\n${result.choices[0].message.content}\n\n---\n\n`;
-    document.getElementById("agentOutput").textContent = report;
   }
 
-  const fullCode = Object.entries(files).map(([k, v]) => `File: ${k}\n${v}`).join("\n\n");
+  const allFiles = Object.entries(files).map(([k, v]) => `File: ${k}\n${v}`).join("\n\n");
   const global = await model.chat.completions.create({
     messages: [
-      { role: "system", content: "You're an AI architect." },
-      { role: "user", content: `Based on this project, suggest large-scale refactors:\n\n${fullCode}` }
+      { role: "system", content: "You're an AI software architect." },
+      { role: "user", content: `Review the whole project and suggest architectural changes:\n\n${allFiles}` }
     ],
     stream: false
   });
 
-  report += `🏗️ Global Refactor:\n${global.choices[0].message.content}`;
+  report += `🏗️ Global Architecture Analysis:\n${global.choices[0].message.content}`;
   document.getElementById("agentOutput").textContent = report;
 };
 
 window.sendChat = async () => {
   const input = document.getElementById("chatInput").value.trim();
   if (!input) return;
-
   chatHistory.push({ role: "user", content: input });
   document.getElementById("chatLog").innerHTML += `<div><b>You:</b> ${input}</div>`;
   document.getElementById("chatInput").value = "";
