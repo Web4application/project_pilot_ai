@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>🧠 ProjectPilotAI - WebLLM Dashboard</title>
+  <script type="module" src="https://mlc.ai/web-llm/dist/index.js"></script>
+  <style>
+    body { background: #121212; color: #fff; font-family: monospace; padding: 2rem; }
+    .tabs { display: flex; gap: 1rem; margin-bottom: 1rem; }
+    .tab { padding: 1rem; background: #1e1e1e; cursor: pointer; }
+    .tab.active { background: #00ff90; color: black; }
+    .view { display: none; }
+    .view.active { display: block; }
+    textarea { width: 100%; padding: 1rem; font-size: 1rem; background: #1e1e1e; color: #00ff90; border: 1px solid #444; margin-top: 1rem; }
+    button { padding: 1rem; background: #00ff90; border: none; margin-top: 1rem; font-size: 1rem; cursor: pointer; }
+    pre { background: #1e1e1e; padding: 1rem; white-space: pre-wrap; margin-top: 1rem; border: 1px solid #444; }
+  </style>
+</head>
+<body>
+  <h1>🧠 ProjectPilotAI Dashboard (WebLLM)</h1>
+  <div class="tabs">
+    <div class="tab active" data-tab="code">📄 Code</div>
+    <div class="tab" data-tab="summary">📝 Summary</div>
+    <div class="tab" data-tab="refactor">♻️ Refactor</div>
+  </div>
+
+  <div class="view active" id="code">
+    <textarea id="codeInput" rows="10">def hello():\n    print("Hello, world!")</textarea>
+  </div>
+  <div class="view" id="summary">
+    <button onclick="runLLM('Summarize the following code:')">Summarize Code</button>
+    <pre id="summaryOutput">⚡ Waiting for input...</pre>
+  </div>
+  <div class="view" id="refactor">
+    <button onclick="runLLM('Refactor the following code for clarity:')">Refactor Code</button>
+    <pre id="refactorOutput">⚡ Waiting for input...</pre>
+  </div>
+
+  <script type="module">
+    import { ChatWorkerClient } from "https://mlc.ai/web-llm/dist/index.js";
+
+    const tabs = document.querySelectorAll(".tab");
+    const views = document.querySelectorAll(".view");
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        tabs.forEach(t => t.classList.remove("active"));
+        views.forEach(v => v.classList.remove("active"));
+        tab.classList.add("active");
+        document.getElementById(tab.dataset.tab).classList.add("active");
+      });
+    });
+
+    const client = new ChatWorkerClient();
+    const load = async () => {
+      const output = document.getElementById("summaryOutput");
+      output.textContent = "⚡ Loading LLaMA 3...";
+      await client.reload("Llama-3-8B-Instruct-q4f32_1");
+      output.textContent = "✅ Model loaded.";
+      document.getElementById("refactorOutput").textContent = "✅ Model loaded.";
+    };
+    load();
+
+    window.runLLM = async (promptPrefix) => {
+      const code = document.getElementById("codeInput").value;
+      const prompt = `${promptPrefix}\n\n${code}`;
+      const res = await client.chat.completions.create({
+        messages: [
+          { role: "system", content: "You are a senior AI software engineer." },
+          { role: "user", content: prompt }
+        ],
+        stream: false
+      });
+      const output = promptPrefix.includes("Summarize") ? "summaryOutput" : "refactorOutput";
+      document.getElementById(output).textContent = res.choices[0].message.content;
+    };
+  </script>
+</body>
+</html>
