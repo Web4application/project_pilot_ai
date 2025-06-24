@@ -53,3 +53,4 @@
 
 ## 🧱 Architecture
 
+![ProjectPilotAI Preview](./projectpilot_readme_preview.png)
