@@ -1,44 +1,55 @@
-# 🤖 ProjectPilotAI — Smart Developer Assistant for Every Project
+# 🧠 ProjectPilotAI
 
-![GitHub stars](https://img.shields.io/github/stars/Web4application/project_pilot_ai?style=social)
-![GitHub forks](https://img.shields.io/github/forks/Web4application/project_pilot_ai?style=social)
-![Last commit](https://img.shields.io/github/last-commit/Web4application/project_pilot_ai)
-![License](https://img.shields.io/github/license/Web4application/project_pilot_ai)
+**ProjectPilotAI** is an AI-powered developer assistant that understands, analyzes, documents, and improves your codebase. It leverages cutting-edge large language models (LLMs), real-time file monitoring, GitHub integrations, and voice input to act as your second brain for software development.
 
 ---
 
-## 🧠 Overview
+## 🚀 Features
 
-**ProjectPilotAI** is a smart, AI-powered project assistant designed to help developers:
-- Organize and analyze their project files
-- Refactor and improve code intelligently
-- Sync with GitHub repositories
-- Auto-generate documentation and READMEs
-- Provide insight through natural language chat powered by GPT-4
+### 🔍 AI Codebase Analysis
+- Summarize entire repositories with GPT-4
+- Understand unfamiliar codebases in seconds
 
-Works via **CLI** or **Web UI**, supports **multiple languages**, and is easy to extend.
+### ✨ Intelligent Refactoring (Pluggable)
+- Catch smells, anti-patterns, and suggest best practices
+- Hooks for custom GPT prompts and code transformation
+
+### 🛠 Real-Time Dev Watchdog
+- Monitor file changes
+- Instantly suggest improvements or generate docs on file save
+
+### 🤖 PR Review Bot (GitHub Actions)
+- Automatically reviews pull requests
+- Flags risky changes and suggests fixes using AI
+
+### 📄 Auto-Documentation Generator
+- Create or update `README.md`, module docstrings, and architecture maps
+
+### 🧪 Security Scanner
+- Detect `eval()`, insecure file access, missing `with` blocks, and more
+- Pluggable AST-based Python linter
+
+### 🔈 Voice Command & TTS
+- Use Whisper to transcribe voice to code
+- Hear summaries, file info, or project status aloud via TTS
+
+### 💡 Natural Language Project Generator
+- “Create a Flask API with Docker and tests” → Done.
+- Fully code-generative workflow with AI chain of thought
+
+### 🧰 VS Code Extension (WIP)
+- Interact directly with the assistant from VS Code
+- Generate functions, review diffs, or refactor selected code
+
+### 🎨 Figma to Code Converter
+- Converts Figma JSON into component code
+- Useful for front-end engineers and designers
+
+### 🌐 Streamlit Deploy UI
+- Run the entire system from a sleek web GUI
+- Upload a project, analyze, refactor, or summarize with one click
 
 ---
 
-## 🎯 Key Goals
+## 🧱 Architecture
 
-- 🔍 Deep project file analysis using AI
-- ⚡️ Refactoring suggestions & best practices
-- 📁 Multi-language codebase understanding
-- 📝 Auto-documentation and README generation
-- 🧠 GPT-4 integration for smart command prompts
-- 🔗 GitHub API integration for pull/push/review
-- 🌐 Simple and beautiful FastAPI-based Web UI
-
----
-
-## 📦 Project Structure
-
-```bash
-project_pilot_ai/
-├── ai_core/           # GPT-4 logic: analysis, prompts, task engine
-├── cli/               # CLI commands for dev automation
-├── web_ui/            # FastAPI Web dashboard (UI assistant)
-├── integrations/      # GitHub, file system, optional toolchains
-├── examples/          # Test project examples
-└── README.md
