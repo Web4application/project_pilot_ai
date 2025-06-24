@@ -33,3 +33,9 @@ yo code
 npx --package yo --package generator-code -- yo code
 
 npm i generator-code
+
+# Install
+pip install streamlit
+
+# Run locally
+streamlit run gui/deployer.py
