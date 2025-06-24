@@ -49,3 +49,5 @@ npm install @mlc-ai/web-llm
 yarn add @mlc-ai/web-llm
 # or pnpm
 pnpm install @mlc-ai/web-llmp
+
+uvicorn app.web.main:app --host 0.0.0.0 --port 10000
