@@ -1,0 +1,34 @@
+.TH ENCLOV-STATUS 1 "June 2025" "v0.1.0" "Enclov AI CLI Manual"
+.SH NAME
+enclov-status \- Displays the current status of all Enclov-AI services.
+.SH SYNOPSIS
+.B enclov status
+.SH DESCRIPTION
+Displays the current status of all Enclov-AI services.
+.SH OPTIONS
+.TP
+.BR --help
+Show usage information for the status command and exit.
+.SH EXAMPLES
+.EX
+$ enclov status
+.EE
+.SH EXIT STATUS
+.TP
+.B 0
+Services are running
+.TP
+.B 1
+Some or all services are not running
+.SH FILES
+.TP
+.B docker-compose.yml
+Used to determine container states
+.SH SEE ALSO
+.BR enclov (1)
+.BR enclov-start (1)
+.SH AUTHOR
+Written by Kubu Lee.
+
+.SH COPYRIGHT
+MIT License © 2025 Web4application

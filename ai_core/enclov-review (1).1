@@ -1,0 +1,40 @@
+.TH ENCLOV-REVIEW 1 "June 2025" "v0.1.0" "Enclov AI CLI Manual"
+.SH NAME
+enclov-review \- Triggers an AI-powered review on a given GitHub pull request URL.
+.SH SYNOPSIS
+.B enclov review <PR_URL>
+.SH DESCRIPTION
+Triggers an AI-powered review on a given GitHub pull request URL.
+.SH OPTIONS
+.TP
+.BR --help
+Show usage for the review command and exit.
+.TP
+.BR --dry-run
+Display proposed review without posting.
+.SH EXAMPLES
+.EX
+$ enclov review https://github.com/user/repo/pull/42
+.EE
+.SH ENVIRONMENT
+.TP
+.B GITHUB_TOKEN
+OAuth token with permissions to comment on PRs.
+.SH EXIT STATUS
+.TP
+.B 0
+Review posted successfully
+.TP
+.B 1
+Invalid PR URL or permissions error
+.TP
+.B 2
+AI model error or timeout
+.SH SEE ALSO
+.BR enclov (1)
+.BR enclov-config (5)
+.SH AUTHOR
+Written by Kubu Lee.
+
+.SH COPYRIGHT
+MIT License © 2025 Web4application
