@@ -42,3 +42,10 @@ streamlit run gui/deployer.py
 
 docker build -t projectpilotai .
 docker run -p 7860:7860 projectpilotai
+
+# npm
+npm install @mlc-ai/web-llm
+# yarn
+yarn add @mlc-ai/web-llm
+# or pnpm
+pnpm install @mlc-ai/web-llmp
