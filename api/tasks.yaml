@@ -1,0 +1,39 @@
+
+---
+
+## 📘 `docs/slash_commands.md`
+
+```markdown
+# ⚡ Slash Commands
+
+You can interact with Project Pilot via natural `/commands` in the frontend or CLI.
+
+---
+
+## `/analyze`
+
+> Summarize repo structure and module hierarchy.
+
+---
+
+## `/docgen`
+
+> Generate documentation: README, usage, API, and comments.
+
+---
+
+## `/roadmap`
+
+> Suggests project features and high-level milestones.
+
+---
+
+## `/tasks`
+
+> Breaks down the project into modular dev tasks and subtasks.
+
+---
+
+## `/comment`
+
+> AI-generated inline comments for selected code blocks.

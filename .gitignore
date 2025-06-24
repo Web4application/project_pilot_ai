@@ -1,50 +1,43 @@
-# Python artifacts
+# Python
 __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
-
-# Virtual environments
-.venv/
-env/
-venv/
-
-# Certs & secrets
-*.pfx
-*.cer
-*.key
-*.pem
-*.csr
-logs/
+*.db
+*.sqlite3
 *.log
 
-# Task Scheduler exports
-*.xml
-
-# Environment files
+# Environment
 .env
 .env.*
+venv/
+.venv/
 
-# OS metadata
-.DS_Store
-Thumbs.db
-desktop.ini
-
-# VSCode and IDE settings
+# IDEs
 .vscode/
 .idea/
+*.code-workspace
 
-# Streamlit cache
-.streamlit/
+# Certs + Logs
+certs/
+*.pfx
+*.cer
+*.pem
+*.key
+cert_log_*.log
+cert_events.json
 
-# Bytecode + backups
-*.bak
-*.swp
-*.swo
-*~
+# Node/Frontend
+node_modules/
+dist/
+build/
 
-# Docker and runtime files
-*.pid
+# Jupyter
+*.ipynb_checkpoints
 
-# Ignore local dashboards if customized
-extensions/cert_dashboard/__pycache__/
+# Testing
+htmlcov/
+.coverage
+coverage.xml
+pytest_cache/
+.tox/
