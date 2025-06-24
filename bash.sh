@@ -39,3 +39,6 @@ pip install streamlit
 
 # Run locally
 streamlit run gui/deployer.py
+
+docker build -t projectpilotai .
+docker run -p 7860:7860 projectpilotai
