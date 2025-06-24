@@ -1,56 +1,147 @@
 # 🧠 ProjectPilotAI
 
-**ProjectPilotAI** is an AI-powered developer assistant that understands, analyzes, documents, and improves your codebase. It leverages cutting-edge large language models (LLMs), real-time file monitoring, GitHub integrations, and voice input to act as your second brain for software development.
+A powerful AI-driven assistant designed to guide your entire software development workflow — from project setup and code review to blockchain interaction and smart contract integration.
+
+![Python](https://img.shields.io/badge/Language-Python-blue.svg)
+![Status](https://img.shields.io/badge/Status-Active-success.svg)
+![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)
+![Web4](https://img.shields.io/badge/Web4-Ready-00bfff.svg)
+
+## 🚀 Overview
+
+**ProjectPilotAI** is your AI-powered project co-pilot that:
+- Automates code analysis and project initialization
+- Integrates directly with your GitHub repositories
+- Supports smart contract deployment and Web3 interactions
+- Powers up Fadaka Blockchain features like wallet generation, transaction handling, token mint/burn/swap, and more
+
+> Deployed GitHub Page: 🌐 [web4application.github.io/project_pilot_ai](https://web4application.github.io/project_pilot_ai)
 
 ---
 
-## 🚀 Features
+## 🧩 Features
 
-### 🔍 AI Codebase Analysis
-- Summarize entire repositories with GPT-4
-- Understand unfamiliar codebases in seconds
-
-### ✨ Intelligent Refactoring (Pluggable)
-- Catch smells, anti-patterns, and suggest best practices
-- Hooks for custom GPT prompts and code transformation
-
-### 🛠 Real-Time Dev Watchdog
-- Monitor file changes
-- Instantly suggest improvements or generate docs on file save
-
-### 🤖 PR Review Bot (GitHub Actions)
-- Automatically reviews pull requests
-- Flags risky changes and suggests fixes using AI
-
-### 📄 Auto-Documentation Generator
-- Create or update `README.md`, module docstrings, and architecture maps
-
-### 🧪 Security Scanner
-- Detect `eval()`, insecure file access, missing `with` blocks, and more
-- Pluggable AST-based Python linter
-
-### 🔈 Voice Command & TTS
-- Use Whisper to transcribe voice to code
-- Hear summaries, file info, or project status aloud via TTS
-
-### 💡 Natural Language Project Generator
-- “Create a Flask API with Docker and tests” → Done.
-- Fully code-generative workflow with AI chain of thought
-
-### 🧰 VS Code Extension (WIP)
-- Interact directly with the assistant from VS Code
-- Generate functions, review diffs, or refactor selected code
-
-### 🎨 Figma to Code Converter
-- Converts Figma JSON into component code
-- Useful for front-end engineers and designers
-
-### 🌐 Streamlit Deploy UI
-- Run the entire system from a sleek web GUI
-- Upload a project, analyze, refactor, or summarize with one click
+- 🧠 **AI Assistant Interface** – GPT-powered project interaction via CLI and Web
+- 💾 **Local & GitHub Code Parsing** – Analyze and refactor entire repositories
+- 🔐 **Wallet + Key Management** – HD wallet generation, transaction signing
+- 🔄 **Fadaka Blockchain Integration** – Smart contract deployment, faucet, mint/swap
+- 📡 **Live Transaction Tracking** – With confirmation checks and event logs
+- 📦 **FastAPI Backend** – API for signing, broadcasting, and fetching TX data
+- 🖥️ **Web UI Support** – Jekyll dashboard with real-time updates and blockchain tools
 
 ---
 
-## 🧱 Architecture
+## 🏗️ Project Structure
+
+```bash
+
+project_pilot_ai/
+├── app/                   # Main Python app
+│   ├── core/              # AI logic & command handlers
+│   ├── blockchain/        # Fadaka integration (wallets, txs, etc.)
+│   └── web/               # FastAPI server + API routes
+├── templates/             # HTML templates for the UI
+├── static/                # JS/CSS for Web Dashboard
+├── README.md              # (You're here)
+└── requirements.txt       # Python
+dependencies
+
+```
+
+ ## ⚙️ Setup Instructions
+
+### ✅ Prerequisites
+
+* Python 3.9+
+* Node.js (optional, for frontend)
+* GitHub Personal Access Token (if using GitHub features)
+
+### 🛠️ Installation
+
+```bash
+
+git clone https://github.com/Web4application/project_pilot_ai.git
+cd project_pilot_ai
+pip install -r requirements.txt
+```
+
+### 🚀 Run the AI Assistant Web API
+
+```bash
+
+uvicorn app.web.main:app --reload --port 8000
+```
+
+Visit: [http://localhost:8000](http://localhost:8000)
+
+---
+
+## 💡 Usage
+
+You can use the assistant to:
+
+* 🧠 Chat with your projects via CLI or browser
+* 📁 Upload code and get suggestions or fixes
+* 💬 Ask to deploy or interact with smart contracts
+* ⚡ Sign and broadcast transactions to Fadaka
+* 🧪 Test Web3 logic via faucet, mint/burn, and swap tools
+
+---
+
+## 🌍 Deployment Options
+
+* [x] GitHub Pages (Jekyll-ready)
+* [x] Render / Railway / fly.io (FastAPI backend)
+* [ ] Electron / PyInstaller desktop packaging (coming soon)
+
+---
+
+## 🛡️ Security
+
+* Wallets are generated locally with HD seed logic
+* Transaction signing uses secure in-memory operations
+* API protected via headers (optionally OAuth)
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions!
+
+```bash
+
+git clone https://github.com/Web4application/project_pilot_ai.git
+# Create feature branch, make your changes, then:
+git push origin feature-branch
+```
+
+Please open a pull request with a clear description of your changes.
+
+---
+
+## 📄 License
+
+Licensed under the MIT License.
+© 2025 [Web4Application](https://github.com/Web4application)
+
+---
+
+## ✨ Acknowledgements
+
+* Fadaka Blockchain Core
+* GPT-4 Project Pilot Intelligence
+* FastAPI, Web3.py, and Hardhat
+* Web4 — The Future of Decentralized Apps
+
+---
+
+## 🔗 Related Projects
+
+* [Fadaka Blockchain](https://github.com/Web4application/fadaka-blockchain)
+* [Swift Beta Wallet](https://web4application.github.io/project_pilot_ai)
+
+
+
+
 
 ![ProjectPilotAI Preview](./projectpilot_readme_preview.png)
