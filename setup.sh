@@ -13,3 +13,5 @@ fi
 echo "✅ Setup complete!"
 echo "👉 To run the dashboard:"
 echo "   make run-dashboard"
+
+npx vscode-dts dev
