@@ -20,7 +20,7 @@ POST http://localhost:8000/api/analyze
 
 npm install -g yo
 
-cd <https://github.com/Web4application/project_pilot_ai/tree/main>
+cd <https://github.com/Web4application/project_pilot_ai>
 
 docker build -t vscode-generator-code 
 
@@ -31,3 +31,5 @@ npm install --global yo generator-code
 yo code
 
 npx --package yo --package generator-code -- yo code
+
+npm i generator-code
