@@ -1,3 +1,10 @@
+git init
+git remote add origin https://github.com/Web4application/project_pilot_ai.git
+git add .
+git commit -m "Initial commit: ProjectPilotAI extension + FastAPI backend"
+git branch -M main
+git push -u origin main
+
 docker build -t projectpilot-cert-dashboard .
 docker run -p 8501:8501 projectpilot-cert-dashboard
 
