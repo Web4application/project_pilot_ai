@@ -1,0 +1,22 @@
+name: 🚀 Deploy to Render
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Install Render CLI
+        run: curl -fsSL https://cli.render.com/install.sh | bash
+
+      - name: Authenticate with Render
+        run: render login --api-key ${{ secrets.RENDER_API_KEY }}
+
+      - name: Trigger Deploy
+        run: render deploy --service-id ${{ secrets.RENDER_SERVICE_ID }}

@@ -1,0 +1,35 @@
+{
+  "name": "project-pilot",
+  "displayName": "ProjectPilotAI",
+  "description": "Your AI development assistant in VS Code.",
+  "version": "0.1.0",
+  "publisher": "web4application",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "activationEvents": [
+    "onCommand:projectPilot.start"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "projectPilot.start",
+        "title": "Start ProjectPilot AI",
+        "category": "ProjectPilotAI"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "tsc -p ./",
+    "compile": "tsc -watch -p ./"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@types/node": "^18.18.2",
+    "@types/vscode": "^1.75.0"
+  }
+}

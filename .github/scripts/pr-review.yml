@@ -1,0 +1,9 @@
+name: PR Reviewer
+on: [pull_request]
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: pip install -r requirements.txt
+      - run: python cli/review_pr.py
