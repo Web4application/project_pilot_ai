@@ -1,3 +1,5 @@
+pip install pre-commit
+
 git init
 git remote add origin https://github.com/Web4application/project_pilot_ai.git
 git add .
