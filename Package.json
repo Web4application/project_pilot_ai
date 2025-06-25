@@ -24,6 +24,9 @@
     "vscode:prepublish": "tsc -p ./",
     "compile": "tsc -watch -p ./"
   },
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  },
   "devDependencies": {
     "typescript": "^5.3.3",
     "@types/node": "^18.18.2",
