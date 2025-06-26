@@ -1,6 +1,7 @@
 pip install pre-commit
 gh extension install github/gh-copilot --force
 
+sudo apt-get install build-essential openjdk-21-jdk python zip unzip
 git init
 git remote add origin https://github.com/Web4application/project_pilot_ai.git
 git add .
