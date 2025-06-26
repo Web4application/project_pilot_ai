@@ -33,7 +33,7 @@ setup(
             # likely to result in formatting changes that should happen in their
             # own PR. This will basically happen yearly
             # https://black.readthedocs.io/en/stable/the_black_code_style/index.html#stability-policy
-            'black>=24.3.0,<25.0.0',
+            'black>=25.1.0,<25.2.0',
             'build>=0.7.0',
             # docutils 0.21.x bumped to >=3.9 and 3.8 is still active. we'll
             # have to clamp it down until we remove 3.8
