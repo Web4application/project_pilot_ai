@@ -1,12 +1,14 @@
-# 🧠 ProjectPilotAI
-
-A powerful AI-driven assistant designed to guide your entire software development workflow — from project setup and code review to blockchain interaction and smart contract integration.
-
+![MIT License](https://img.shields.io/github/license/Web4application/project_pilot_ai)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 ![Python](https://img.shields.io/badge/Language-Python-blue.svg)
 ![Status](https://img.shields.io/badge/Status-Active-success.svg)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)
 ![Web4](https://img.shields.io/badge/Web4-Ready-00bfff.svg)
 [![GitHub Actions Demo](https://github.com/Web4application/project_pilot_ai/actions/workflows/github-actions-demo.yml/badge.svg)](https://github.com/Web4application/project_pilot_ai/actions/workflows/github-actions-demo.yml)
+
+# 🧠 ProjectPilotAI
+
+A powerful AI-driven assistant designed to guide your entire software development workflow — from project setup and code review to blockchain interaction and smart contract integration.
 
 ## 🚀 Overview
 
