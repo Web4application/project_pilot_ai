@@ -1,3 +1,16 @@
+npm install -g @vscode/vsce
+vsce package
+code --install-extension project-pilot-0.1.0.vsix
+
+$ cd projectpilotAI
+$ vsce package
+# myExtension.vsix generated
+$ vsce publish
+# <publisher id>.myExtension published to VS Code Marketplace
+
+vsce login projectpilotAI
+
+
 conda activate your-environment
 python -m pip install --pre -U -f https://mlc.ai/wheels mlc-llm-nightly-cpu mlc-ai-nightly-cpu
 
