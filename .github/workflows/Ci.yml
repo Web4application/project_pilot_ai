@@ -1,0 +1,57 @@
+name: ProjectPilotAI CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+        python-version: [3.10]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install extension dependencies
+        working-directory: ./project-pilot
+        run: |
+          npm install
+          npm run compile
+
+      - name: Lint extension (optional)
+        working-directory: ./project-pilot
+        run: |
+          npx eslint .
+
+      - name: Install FastAPI backend dependencies
+        working-directory: ./project-pilot-backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Backend Lint Check
+        working-directory: ./project-pilot-backend
+        run: |
+          pip install flake8
+          flake8 summarize.py
+
+      - name: Package VSIX
+        working-directory: ./project-pilot
+        run: |
+          npm install -g @vscode/vsce
+          vsce package
