@@ -1,4 +1,5 @@
 pip install pre-commit
+gh extension install github/gh-copilot --force
 
 git init
 git remote add origin https://github.com/Web4application/project_pilot_ai.git
