@@ -85,3 +85,12 @@ jobs:
 
       - name: List all downloaded files
         run: ls -R my-artifacts
+        - name: Generate CI Report
+  run: |
+    echo '<!DOCTYPE html><html><body><h1>📊 ProjectPilotAI Report</h1></body></html>' > projectpilotai_ci_report.html
+
+- name: Upload Report Artifact
+  uses: actions/upload-artifact@v4
+  with:
+    name: projectpilotai-report
+    path: projectpilotai_ci_report.html
