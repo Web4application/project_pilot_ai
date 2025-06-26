@@ -6,6 +6,7 @@ A powerful AI-driven assistant designed to guide your entire software developmen
 ![Status](https://img.shields.io/badge/Status-Active-success.svg)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)
 ![Web4](https://img.shields.io/badge/Web4-Ready-00bfff.svg)
+[![GitHub Actions Demo](https://github.com/Web4application/project_pilot_ai/actions/workflows/github-actions-demo.yml/badge.svg)](https://github.com/Web4application/project_pilot_ai/actions/workflows/github-actions-demo.yml)
 
 ## 🚀 Overview
 

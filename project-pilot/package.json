@@ -1,0 +1,21 @@
+{
+  "name": "project-pilot-ai",
+  "displayName": "ProjectPilotAI",
+  "description": "Your personal AI copilot inside VS Code",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "main": "./out/extension.js",
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "typescript": "^5.0.0",
+    "vsce": "^3.0.0"
+  }
+}

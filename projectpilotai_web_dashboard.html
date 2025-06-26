@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ProjectPilotAI Web Dashboard</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; background: #f9f9f9; }
+    textarea { width: 100%; height: 150px; margin-top: 10px; }
+    .file-section, .output-section { margin-top: 2rem; }
+    button { margin-right: 10px; padding: 0.5rem 1rem; }
+  </style>
+</head>
+<body>
+  <h1>🧠 ProjectPilotAI Web Dashboard</h1>
+
+  <div class="file-section">
+    <input type="file" id="fileInput" accept=".js,.py,.ts,.txt" />
+    <textarea id="codeArea" placeholder="Your code will appear here..."></textarea>
+  </div>
+
+  <div>
+    <button onclick="runAI('explain')">Explain</button>
+    <button onclick="runAI('doc')">DocGen</button>
+    <button onclick="runAI('refactor')">Refactor</button>
+    <button onclick="exportMarkdown()">Export Markdown</button>
+  </div>
+
+  <div class="output-section">
+    <h3>🧾 Output</h3>
+    <textarea id="outputArea" placeholder="AI output will appear here..."></textarea>
+  </div>
+
+  <script>
+    const codeArea = document.getElementById('codeArea');
+    const outputArea = document.getElementById('outputArea');
+
+    document.getElementById('fileInput').addEventListener('change', function() {
+      const file = this.files[0];
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        codeArea.value = e.target.result;
+      };
+      reader.readAsText(file);
+    });
+
+    async function runAI(action) {
+      const code = codeArea.value;
+      if (!code) {
+        alert("Please load some code first.");
+        return;
+      }
+
+      // Replace this with actual backend API call
+      outputArea.value = `[${action.toUpperCase()}] output for the given code:\n\n${code}`;
+    }
+
+    function exportMarkdown() {
+      const content = "# 🧠 ProjectPilotAI Walkthrough\n\n" +
+                      "```code\n" + codeArea.value + "\n```\n\n" +
+                      "**AI Output:**\n\n```\n" + outputArea.value + "\n```";
+      const blob = new Blob([content], { type: "text/markdown" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "projectpilotai_walkthrough.md";
+      link.click();
+    }
+  </script>
+</body>
+</html>
