@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ProjectPilotAI Dashboard</title>
+  <script type="module" src="https://mlc.ai/web-llm/dist/index.js"></script>
+</head>
+<body>
+  <h1>🧠 ProjectPilotAI Web Dashboard</h1>
+  <input type="file" id="fileInput" multiple />
+  <button onclick="runExplain()">Explain Code</button>
+  <pre id="output"></pre>
+
+  <script>
+    async function runExplain() {
+      const output = document.getElementById("output");
+      output.textContent = "Running AI explanation...";
+
+      // Placeholder: Add WebLLM or backend connection here
+      output.textContent = "Code explanation goes here.";
+    }
+  </script>
+</body>
+</html>
