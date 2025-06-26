@@ -1,0 +1,87 @@
+name: ProjectPilotAI Artifact Workflow
+
+on: [push]
+
+jobs:
+  job_1:
+    name: Add 3 and 7
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add numbers
+        shell: bash
+        run: echo $((3 + 7)) > math-homework.txt
+
+      - name: Upload math result
+        uses: actions/upload-artifact@v4
+        with:
+          name: homework_pre
+          path: math-homework.txt
+
+  job_2:
+    name: Multiply result by 9
+    needs: job_1
+    runs-on: windows-latest
+    steps:
+      - name: Download result
+        uses: actions/download-artifact@v4
+        with:
+          name: homework_pre
+
+      - name: Multiply by 9
+        shell: bash
+        run: |
+          value=$(cat math-homework.txt)
+          echo $((value * 9)) > math-homework.txt
+
+      - name: Upload final result
+        uses: actions/upload-artifact@v4
+        with:
+          name: homework_final
+          path: math-homework.txt
+
+  job_3:
+    name: Display Final Answer
+    needs: job_2
+    runs-on: macos-latest
+    steps:
+      - name: Download final result
+        uses: actions/download-artifact@v4
+        with:
+          name: homework_final
+
+      - name: Print result
+        run: |
+          value=$(cat math-homework.txt)
+          echo "🧠 The result is: $value"
+
+  upload:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Create a file
+        run: echo "hello from ${{ matrix.os }}" > file-${{ matrix.os }}.txt
+
+      - name: Upload artifact from ${{ matrix.os }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-artifact-${{ matrix.os }}
+          path: file-${{ matrix.os }}.txt
+          retention-days: 7
+          compression-level: 6
+          overwrite: true
+
+  download:
+    needs: upload
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all matrix artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: my-artifacts
+          pattern: my-artifact-*
+          merge-multiple: true
+
+      - name: List all downloaded files
+        run: ls -R my-artifacts
