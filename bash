@@ -9,3 +9,6 @@ $ php yii migrate-rbac
 $ php yii migrate
 
 $ cp .env.example .env
+
+npm install --save-dev @commitlint/config-conventional @commitlint/cli
+echo "export default {extends: ['@commitlint/config-conventional']};" > commitlint.config.js
