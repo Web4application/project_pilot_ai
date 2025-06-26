@@ -7,3 +7,5 @@ $ composer create-project hunwalk/yii2-basic-firestarter <project_pilot_AI> --pr
 $ php yii migrate-user
 $ php yii migrate-rbac
 $ php yii migrate
+
+$ cp .env.example .env
