@@ -1,9 +1,9 @@
 # email_log.ps1
 param (
-  [string]$SmtpServer = "smtp.yourdomain.com",
-  [string]$From = "cert-bot@yourdomain.com",
-  [string]$To = "admin@yourdomain.com",
-  [string]$Username = "your_smtp_user",
+  [string]$SmtpServer = "smtp.web4app.com",
+  [string]$From = "cert-bot@web4app.com",
+  [string]$To = "admin@web4app.com",
+  [string]$Username = "web4app",
   [string]$Password = "your_smtp_password"
 )
 
