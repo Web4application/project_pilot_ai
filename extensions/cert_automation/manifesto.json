@@ -1,0 +1,20 @@
+{
+  "name": "Web4 GPT-5 Mini Chat",
+  "short_name": "GPT-5 Mini",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0d0d0d",
+  "theme_color": "#4dd0e1",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
