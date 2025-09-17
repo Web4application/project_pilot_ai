@@ -132,7 +132,7 @@ Licensed under the MIT License.
 ## ✨ Acknowledgements
 
 * Fadaka Blockchain Core
-* GPT-4 Project Pilot Intelligence
+* GPT-5-mini Project Pilot Intelligence
 * FastAPI, Web3.py, and Hardhat
 * Web4 — The Future of Decentralized Apps
 
