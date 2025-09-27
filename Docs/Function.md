@@ -1,3 +1,5 @@
+
+```
 // assistant.js
 
 // Function to update the output div dynamically
