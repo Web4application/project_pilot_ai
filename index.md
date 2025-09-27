@@ -39,5 +39,3 @@ download: download artifacts → merged into /my-artifacts/
   </div>
 </body>
 </html>
-
-
