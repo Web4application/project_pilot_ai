@@ -1,3 +1,4 @@
+```
 /*
  *  Licensed to the Apache Software Foundation (ASF) under one
  *  or more contributor license agreements.  See the NOTICE file
@@ -16,6 +17,10 @@
  *  limitations under the License.
  */
 package org.apache.beam.learning.katas.coretransforms.combine.combinefn
+
+
+
+```bash
 
 import org.apache.beam.learning.katas.coretransforms.combine.combinefn.Task.AverageFn.Accum
 import org.apache.beam.learning.katas.util.Log
