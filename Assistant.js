@@ -48,7 +48,7 @@ async function realAIRefactor(code) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'gpt-4',
+        model: 'gpt-5-mini',
         messages: [
           { role: 'system', content: 'You are a senior developer.' },
           { role: 'user', content: 'Refactor and optimize this code:\\n\\n' + code }
@@ -145,7 +145,7 @@ async function generateDocumentation(code) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      model: 'gpt-4',
+      model: 'gpt-5-mini',
       messages: [
         { role: 'system', content: 'You are an expert software documentation generator.' },
         { role: 'user', content: docPrompt }
