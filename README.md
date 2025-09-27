@@ -1,3 +1,6 @@
+
+<img width="1024" height="1536" alt="projectpilot_readme_preview" src="https://github.com/user-attachments/assets/ea98ebf9-8383-473d-a278-54c321d0a974" />
+
 # 🧠 ProjectPilotAI
 
 **ProjectPilotAI** is an AI-powered developer assistant that understands, analyzes, documents, and improves your codebase. It leverages cutting-edge large language models (LLMs), real-time file monitoring, GitHub integrations, and voice input to act as your second brain for software development.
@@ -59,7 +62,13 @@ project_pilot_ai/
 ├── voice/
 ├── .github/
 └── vscode-plugin/
+
 ```
 
 ## 📜 License
 MIT License © 2025 Web4application
+
+<img width="1589" height="1118" alt="F7860559-8673-4CC9-A324-55BEC04C0A25" src="https://github.com/user-attachments/assets/bc13bf87-6389-426a-961b-58cf3c858304" />
+
+<img width="1024" height="1536" alt="projectpilot_readme_preview" src="https://github.com/user-attachments/assets/c61814b1-87f6-406f-a1b9-df000ab80ce6" />
+
