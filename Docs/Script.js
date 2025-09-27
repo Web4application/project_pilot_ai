@@ -1,6 +1,3 @@
-```
-// assistant.js
-
 // Function to update the output div dynamically
 function updateOutput(message) {
   document.getElementById("output").innerHTML = message;
