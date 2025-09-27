@@ -27,7 +27,7 @@ Example:
 ```js
 { name: 'docs/',
   dir: true,
-  date: 2016-12-25T08:09:27.153Z,
+  date: 2025-12-25T08:09:27.153Z,
   comment: null,
   unixPermissions: 16877,
   dosPermissions: null,
@@ -41,7 +41,7 @@ Example:
 ```js
 { name: 'docs/list.txt',
   dir: false,
-  date: 2016-12-25T08:09:27.152Z,
+  date: 2025-12-25T08:09:27.152Z,
   comment: null,
   unixPermissions: 33206,
   dosPermissions: null,
