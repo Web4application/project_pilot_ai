@@ -1,0 +1,128 @@
+name: ProjectPilotAI Full CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  # ---------------------------
+  # 1. nbdev notebooks
+  # ---------------------------
+  nbdev:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install nbdev
+          pip install -e .
+      - name: Clean notebooks
+        run: nbdev_clean
+      - name: Export notebooks to library
+        run: nbdev_export
+      - name: Run notebook tests
+        run: nbdev_test
+      - name: Build docs
+        run: nbdev_docs
+      - name: Deploy docs to GitHub Pages
+        if: github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+
+  # ---------------------------
+  # 2. Python backend tests
+  # ---------------------------
+  python-tests:
+    runs-on: ubuntu-latest
+    needs: nbdev
+    strategy:
+      matrix:
+        python-version: [3.10, 3.11]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest flake8 black
+      - name: Lint backend
+        run: flake8 ai_core cli integrations
+      - name: Format check
+        run: black --check ai_core cli integrations
+      - name: Run tests
+        run: pytest --maxfail=1 --disable-warnings -q
+
+  # ---------------------------
+  # 3. Node.js frontend / VSCode extension
+  # ---------------------------
+  node-tests:
+    runs-on: ubuntu-latest
+    needs: python-tests
+    strategy:
+      matrix:
+        node-version: [18, 20]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install Node deps
+        run: |
+          cd gui || cd vscode-plugin || true
+          npm install
+      - name: Lint Node code
+        run: |
+          cd gui || cd vscode-plugin || true
+          npm run lint --if-present
+      - name: Run Node tests
+        run: |
+          cd gui || cd vscode-plugin || true
+          npm test --if-present
+
+  # ---------------------------
+  # 4. Docker build & push
+  # ---------------------------
+  docker-build:
+    runs-on: ubuntu-latest
+    needs: [python-tests, node-tests]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build & push Docker image
+        run: |
+          IMAGE_NAME=ghcr.io/${{ github.repository }}/project_pilot_ai
+          docker build -t $IMAGE_NAME:latest .
+          docker push $IMAGE_NAME:latest
+
+  # ---------------------------
+  # 5. PR AI Review Bot
+  # ---------------------------
+  pr-ai-review:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    needs: [python-tests, node-tests]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run AI PR Review
+        run: |
+          echo "This step would call your AI review bot"
+          # Example: python integrations/pr_reviewer.py $GITHUB_EVENT_PATH
