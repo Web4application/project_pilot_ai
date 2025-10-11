@@ -1,3 +1,7 @@
+![install_server](https://files.lmstudio.ai/deeplink/mcp-install-light.svg)
+
+![add_me](https://files.lmstudio.ai/deeplink/mcp-install-dark.svg)
+
 # 🧠 ProjectPilotAI
 
 **ProjectPilotAI** is an AI-powered developer assistant that understands, analyzes, documents, and improves your codebase. It leverages cutting-edge large language models (LLMs), real-time file monitoring, GitHub integrations, and voice input to act as your second brain for software development.
