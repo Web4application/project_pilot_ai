@@ -1,0 +1,3 @@
+[mcp_servers.huggingface]
+command = "npx"
+args = ["-y", "mcp-remote", "https://huggingface.co/mcp?login"]
