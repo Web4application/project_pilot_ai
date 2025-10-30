@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>🧱 Project Architecture | project_pilot_ai</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="🧱 Project Architecture" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Automated AI-Powered Project Management &amp; Code Intelligence" />
+<meta property="og:description" content="Automated AI-Powered Project Management &amp; Code Intelligence" />
+<link rel="canonical" href="https://web4application.github.io/project_pilot_ai/docs/architecture.html" />
+<meta property="og:url" content="https://web4application.github.io/project_pilot_ai/docs/architecture.html" />
+<meta property="og:site_name" content="project_pilot_ai" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="🧱 Project Architecture" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Automated AI-Powered Project Management &amp; Code Intelligence","headline":"🧱 Project Architecture","url":"https://web4application.github.io/project_pilot_ai/docs/architecture.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/project_pilot_ai/assets/css/style.css?v=8fed81b9e45dff6980506e760799cd2be0a42274">
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/project_pilot_ai/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="https://web4application.github.io/project_pilot_ai/">project_pilot_ai</a></h1>
+      
+
+      <h1 id="-project-architecture">🧱 Project Architecture</h1>
+
+<p>This document provides an overview of the system design for <strong>Project Pilot AI</strong>.</p>
+
+<hr />
+
+<h2 id="-core-layers">📐 Core Layers</h2>
+
+<ol>
+  <li>
+    <p><strong>Frontend</strong><br />
+Built with Vite + React + Tailwind. Provides a slash-command driven UI interface.</p>
+  </li>
+  <li><strong>Backend</strong><br />
+Built on FastAPI, the API layer handles:
+    <ul>
+      <li>Slash command routing</li>
+      <li>AI model calls</li>
+      <li>Task parsing and code analysis</li>
+    </ul>
+  </li>
+  <li><strong>AI Layer</strong><br />
+Pluggable LLM pipelines:
+    <ul>
+      <li>OpenAI (GPT-4 / GPT-3.5)</li>
+      <li>Claude (Anthropic)</li>
+      <li>Gemini (Google)</li>
+      <li>WebLLM (local inference)</li>
+    </ul>
+  </li>
+  <li><strong>Vector Store</strong> <em>(Optional)</em>
+    <ul>
+      <li>Uses embeddings (e.g. <code class="language-plaintext highlighter-rouge">text-embedding-3-small</code>) to power project-wide semantic search.</li>
+      <li>DB: <code class="language-plaintext highlighter-rouge">PostgreSQL</code> or <code class="language-plaintext highlighter-rouge">Qdrant</code></li>
+    </ul>
+  </li>
+  <li><strong>DevOps</strong>
+    <ul>
+      <li>Docker</li>
+      <li>GitHub Actions (CI/CD)</li>
+      <li>Nginx + Gunicorn (prod)</li>
+    </ul>
+  </li>
+</ol>
+
+
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+  </body>
+</html>

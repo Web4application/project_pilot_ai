@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>📦 CHANGELOG.md | project_pilot_ai</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="📦 CHANGELOG.md" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Automated AI-Powered Project Management &amp; Code Intelligence" />
+<meta property="og:description" content="Automated AI-Powered Project Management &amp; Code Intelligence" />
+<link rel="canonical" href="https://web4application.github.io/project_pilot_ai/docs/CHANGELOG.html" />
+<meta property="og:url" content="https://web4application.github.io/project_pilot_ai/docs/CHANGELOG.html" />
+<meta property="og:site_name" content="project_pilot_ai" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="📦 CHANGELOG.md" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Automated AI-Powered Project Management &amp; Code Intelligence","headline":"📦 CHANGELOG.md","url":"https://web4application.github.io/project_pilot_ai/docs/CHANGELOG.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/project_pilot_ai/assets/css/style.css?v=8fed81b9e45dff6980506e760799cd2be0a42274">
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/project_pilot_ai/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="https://web4application.github.io/project_pilot_ai/">project_pilot_ai</a></h1>
+      
+
+      <h1 id="-changelogmd">📦 CHANGELOG.md</h1>
+
+<p>All notable changes to this project will be documented in this file.</p>
+
+<hr />
+
+<h2 id="v100---2025-06-13">[v1.0.0] - 2025-06-13</h2>
+
+<p>🎉 <strong>Initial public release — Cert Automation &amp; Monitoring Edition</strong></p>
+
+<h3 id="-added">✨ Added</h3>
+
+<ul>
+  <li><strong>🔐 Certificate Automation System</strong>
+    <ul>
+      <li>PowerShell scripts for creating Root CA and device SSL certs</li>
+      <li>Automated HTTPS binding using <code class="language-plaintext highlighter-rouge">netsh</code> to port 44300</li>
+      <li>Scheduled auto-renewal every 90 days with cert rotation</li>
+    </ul>
+  </li>
+  <li><strong>🖥️ Certificate Monitoring Dashboard</strong>
+    <ul>
+      <li>Built with Streamlit for live cert expiry tracking</li>
+      <li>Visual alerts for expiring or expired certs</li>
+      <li>Integration with Python’s <code class="language-plaintext highlighter-rouge">cryptography</code> for x509 analysis</li>
+    </ul>
+  </li>
+  <li><strong>📁 Project Structure Enhancements</strong>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">extensions/cert_automation/</code> for automation scripts</li>
+      <li><code class="language-plaintext highlighter-rouge">extensions/cert_dashboard/</code> for Streamlit UI</li>
+      <li><code class="language-plaintext highlighter-rouge">logs/</code> directory for transcript and error outputs</li>
+    </ul>
+  </li>
+  <li><strong>🧰 Dev Tools</strong>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">.gitignore</code> with security-first exclusions for <code class="language-plaintext highlighter-rouge">.pfx</code>, <code class="language-plaintext highlighter-rouge">.cer</code>, <code class="language-plaintext highlighter-rouge">.log</code>, and <code class="language-plaintext highlighter-rouge">.env</code></li>
+      <li><code class="language-plaintext highlighter-rouge">.gitattributes</code> for consistent line endings across OS and languages</li>
+      <li>Pre-commit hook for Python &amp; PowerShell linting and secret detection</li>
+      <li>GitHub Actions workflow: <code class="language-plaintext highlighter-rouge">lint-cert.yml</code> for CI lint and expiry verification</li>
+    </ul>
+  </li>
+  <li><strong>🐳 Docker Support</strong>
+    <ul>
+      <li>Streamlit dashboard Dockerfile for containerized deployment</li>
+      <li>Instructions for running dashboard via Docker CLI or locally</li>
+    </ul>
+  </li>
+  <li><strong>📖 Documentation</strong>
+    <ul>
+      <li>Updated README with clear folder structure, quickstart guides, and command snippets</li>
+      <li>Usage instructions for both local and CI/CD environments</li>
+      <li>Integrated cert tools as extensions to <code class="language-plaintext highlighter-rouge">WorkflowOrchestrator</code></li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="notes">Notes</h2>
+
+<p>This marks the foundation of ProjectPilotAI’s internal infrastructure automation. The cert lifecycle system will evolve to include:</p>
+<ul>
+  <li>Multi-host bindings</li>
+  <li>Email/Slack expiry alerts</li>
+  <li>GitHub secret vaulting</li>
+  <li>Cross-device CA provisioning</li>
+</ul>
+
+<hr />
+
+<p>🧠 Maintained by: <a href="https://github.com/Web4application">@Web4application</a></p>
+
+
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+  </body>
+</html>

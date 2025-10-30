@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Azure Power Shell Task | project_pilot_ai</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Azure Power Shell Task" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Automated AI-Powered Project Management &amp; Code Intelligence" />
+<meta property="og:description" content="Automated AI-Powered Project Management &amp; Code Intelligence" />
+<link rel="canonical" href="https://web4application.github.io/project_pilot_ai/docs/AzurePowerShell.html" />
+<meta property="og:url" content="https://web4application.github.io/project_pilot_ai/docs/AzurePowerShell.html" />
+<meta property="og:site_name" content="project_pilot_ai" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Azure Power Shell Task" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Automated AI-Powered Project Management &amp; Code Intelligence","headline":"Azure Power Shell Task","url":"https://web4application.github.io/project_pilot_ai/docs/AzurePowerShell.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/project_pilot_ai/assets/css/style.css?v=8fed81b9e45dff6980506e760799cd2be0a42274">
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/project_pilot_ai/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="https://web4application.github.io/project_pilot_ai/">project_pilot_ai</a></h1>
+      
+
+      <h1 id="azure-power-shell-task">Azure Power Shell Task</h1>
+
+<h2 id="azure-devops-input">Azure DevOps Input</h2>
+
+<h3 id="azurepowershell-v1---v5-task-using-inline-script">AzurePowerShell (v1 - v5) Task using Inline script</h3>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">task</span><span class="pi">:</span> <span class="s">AzurePowerShell@5</span>
+  <span class="na">displayName</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Azure</span><span class="nv"> </span><span class="s">PowerShell</span><span class="nv"> </span><span class="s">Script:</span><span class="nv"> </span><span class="s">Inline</span><span class="nv"> </span><span class="s">Script</span><span class="nv"> </span><span class="s">Version'</span>
+  <span class="na">inputs</span><span class="pi">:</span>
+    <span class="na">azureSubscription</span><span class="pi">:</span> <span class="s1">'</span><span class="s">valet-app-service-transformer-test'</span>   <span class="c1"># Required</span>
+    <span class="na">ScriptType</span><span class="pi">:</span> <span class="s">InlineScript</span>                                  <span class="c1"># Required</span>
+    <span class="na">Inline</span><span class="pi">:</span> <span class="pi">|</span>
+     <span class="s">Write-Host "Testing 1.2..3..."</span>
+     <span class="s">Get-ChildItem</span>
+    <span class="na">FailOnStandardError</span><span class="pi">:</span> <span class="no">true</span>                                 <span class="c1"># Optional</span>
+    <span class="na">preferredAzurePowerShellVersion</span><span class="pi">:</span> <span class="s">3.1.0</span>                    <span class="c1"># Required</span>
+    <span class="na">pwsh</span><span class="pi">:</span> <span class="no">true</span>                                                <span class="c1"># Optional</span>
+    <span class="na">workingDirectory</span><span class="pi">:</span> <span class="s">williamh</span>                                <span class="c1"># Optional</span>
+  <span class="na">continueOnError</span><span class="pi">:</span> <span class="no">true</span>
+</code></pre></div></div>
+
+<h3 id="azurepowershell-v1---v5-task-using-filepath-to-script">AzurePowerShell (v1 - v5) Task using FilePath to script</h3>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">task</span><span class="pi">:</span> <span class="s">AzurePowerShell@5</span>
+  <span class="na">displayName</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Azure</span><span class="nv"> </span><span class="s">PowerShell</span><span class="nv"> </span><span class="s">script:</span><span class="nv"> </span><span class="s">ScriptPath</span><span class="nv"> </span><span class="s">Version'</span>
+  <span class="na">inputs</span><span class="pi">:</span>
+    <span class="na">azureSubscription</span><span class="pi">:</span> <span class="s1">'</span><span class="s">valet-app-service-transformer-test'</span>   <span class="c1"># Required</span>
+    <span class="na">ScriptPath</span><span class="pi">:</span> <span class="s1">'</span><span class="s">williamh/AzurePowerShell_Task_TestScript.ps1'</span>
+    <span class="na">ScriptArguments</span><span class="pi">:</span> <span class="s1">'</span><span class="s">-Title</span><span class="nv"> </span><span class="s">"Test</span><span class="nv"> </span><span class="s">Header"'</span>                   <span class="c1"># Optional</span>
+    <span class="na">ScriptType</span><span class="pi">:</span> <span class="s1">'</span><span class="s">FilePath'</span>                                    <span class="c1"># Required</span>
+    <span class="na">FailOnStandardError</span><span class="pi">:</span> <span class="no">true</span>                                 <span class="c1"># Optional</span>
+    <span class="na">preferredAzurePowerShellVersion</span><span class="pi">:</span> <span class="s">3.1.0</span>                    <span class="c1"># Required</span>
+    <span class="na">pwsh</span><span class="pi">:</span> <span class="no">true</span>                                                <span class="c1"># Optional</span>
+    <span class="na">workingDirectory</span><span class="pi">:</span> <span class="s">williamh</span>                                <span class="c1"># Optional</span>
+  <span class="na">continueOnError</span><span class="pi">:</span> <span class="no">true</span>
+</code></pre></div></div>
+
+<h3 id="azurepowershell-v2-task-using-classic-subscription">AzurePowerShell (v2) Task using Classic subscription</h3>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">task</span><span class="pi">:</span> <span class="s">AzurePowerShell@2</span>
+  <span class="na">displayName</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Azure</span><span class="nv"> </span><span class="s">PowerShell</span><span class="nv"> </span><span class="s">script:</span><span class="nv"> </span><span class="s">ScriptPath</span><span class="nv"> </span><span class="s">Version'</span>
+  <span class="na">inputs</span><span class="pi">:</span>
+    <span class="na">azureClassicSubscription</span><span class="pi">:</span> <span class="s1">'</span><span class="s">valet-app-service-transformer-test'</span>    <span class="c1"># Required</span>
+    <span class="na">azureConnectionType</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Azure</span><span class="nv"> </span><span class="s">Classic'</span>                              <span class="c1"># Required</span>
+    <span class="na">ScriptPath</span><span class="pi">:</span> <span class="s1">'</span><span class="s">williamh/AzurePowerShell_Task_TestScript.ps1'</span>
+    <span class="na">ScriptArguments</span><span class="pi">:</span> <span class="s1">'</span><span class="s">-Title</span><span class="nv"> </span><span class="s">"Test</span><span class="nv"> </span><span class="s">Header"'</span>                           <span class="c1"># Optional</span>
+    <span class="na">azurePowerShellVersion</span><span class="pi">:</span> <span class="s">LatestVersion</span>                             <span class="c1"># Required</span>
+    <span class="na">ScriptType</span><span class="pi">:</span> <span class="s1">'</span><span class="s">FilePath'</span>                                            <span class="c1"># Required</span>
+</code></pre></div></div>
+
+<h2 id="transformed-github-action">Transformed Github Action</h2>
+
+<h3 id="corresponding-azurepowershell-v1---v5-action-using-inline-script">Corresponding AzurePowerShell (v1 - v5) action using Inline script</h3>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Azure</span><span class="nv"> </span><span class="s">PowerShell</span><span class="nv"> </span><span class="s">script:</span><span class="nv"> </span><span class="s">Inline</span><span class="nv"> </span><span class="s">Script</span><span class="nv"> </span><span class="s">Version'</span>
+  <span class="na">continue-on-error</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="na">uses</span><span class="pi">:</span> <span class="s">Azure/login@v1</span>
+  <span class="na">with</span><span class="pi">:</span>
+    <span class="na">creds</span><span class="pi">:</span> <span class="s2">"</span><span class="s">$"</span>
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Azure</span><span class="nv"> </span><span class="s">PowerShell</span><span class="nv"> </span><span class="s">script:</span><span class="nv"> </span><span class="s">Inline</span><span class="nv"> </span><span class="s">Script</span><span class="nv"> </span><span class="s">Version'</span>
+  <span class="na">continue-on-error</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="na">uses</span><span class="pi">:</span> <span class="s">azure/powershell@v1</span>
+  <span class="na">with</span><span class="pi">:</span>
+    <span class="na">inlineScript</span><span class="pi">:</span> <span class="pi">|-</span>
+      <span class="s">cd williamh</span>
+      <span class="s">Write-Host "Testing 1.2..3..."</span>
+      <span class="s">Get-ChildItem</span>
+    <span class="na">errorActionPreference</span><span class="pi">:</span> <span class="s">Stop</span>
+    <span class="na">failOnStandardError</span><span class="pi">:</span> <span class="no">true</span>
+    <span class="na">azPSVersion</span><span class="pi">:</span> <span class="s">3.1.0</span>
+</code></pre></div></div>
+
+<h3 id="corresponding-azurepowershell-v1---v5-action-using-path-to-script">Corresponding AzurePowerShell (v1 - v5) action using path to script</h3>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Azure</span><span class="nv"> </span><span class="s">PowerShell</span><span class="nv"> </span><span class="s">script:</span><span class="nv"> </span><span class="s">ScriptPath</span><span class="nv"> </span><span class="s">Version'</span>
+  <span class="na">continue-on-error</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="na">uses</span><span class="pi">:</span> <span class="s">Azure/login@v1</span>
+  <span class="na">with</span><span class="pi">:</span>
+    <span class="na">creds</span><span class="pi">:</span> <span class="s2">"</span><span class="s">$"</span>
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Azure</span><span class="nv"> </span><span class="s">PowerShell</span><span class="nv"> </span><span class="s">script:</span><span class="nv"> </span><span class="s">ScriptPath</span><span class="nv"> </span><span class="s">Version'</span>
+  <span class="na">continue-on-error</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="na">uses</span><span class="pi">:</span> <span class="s">azure/powershell@v1</span>
+  <span class="na">with</span><span class="pi">:</span>
+    <span class="na">inlineScript</span><span class="pi">:</span> <span class="pi">|-</span>
+      <span class="s">cd williamh</span>
+      <span class="s">williamh/AzurePowerShell_Task_TestScript.ps1 -Title "Test Header"</span>
+    <span class="na">errorActionPreference</span><span class="pi">:</span> <span class="s">Stop</span>
+    <span class="na">failOnStandardError</span><span class="pi">:</span> <span class="no">true</span>
+    <span class="na">azPSVersion</span><span class="pi">:</span> <span class="s">3.1.0</span>
+</code></pre></div></div>
+
+<h3 id="corresponding-azurepowershell-v2-action-using-classic-subscription">Corresponding AzurePowerShell (v2) action using Classic subscription</h3>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Azure</span><span class="nv"> </span><span class="s">PowerShell</span><span class="nv"> </span><span class="s">script:</span><span class="nv"> </span><span class="s">ScriptPath</span><span class="nv"> </span><span class="s">Version'</span>
+  <span class="na">continue-on-error</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="na">uses</span><span class="pi">:</span> <span class="s">Azure/login@v1</span>
+  <span class="na">with</span><span class="pi">:</span>
+    <span class="na">creds</span><span class="pi">:</span> <span class="s2">"</span><span class="s">$"</span>
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Azure</span><span class="nv"> </span><span class="s">PowerShell</span><span class="nv"> </span><span class="s">script:</span><span class="nv"> </span><span class="s">ScriptPath</span><span class="nv"> </span><span class="s">Version'</span>
+  <span class="na">continue-on-error</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="na">uses</span><span class="pi">:</span> <span class="s">azure/powershell@v1</span>
+  <span class="na">with</span><span class="pi">:</span>
+    <span class="na">inlineScript</span><span class="pi">:</span> <span class="s">williamh/AzurePowerShell_Task_TestScript.ps1 -Title "Test Header"</span>
+    <span class="na">errorActionPreference</span><span class="pi">:</span> <span class="s">Stop</span>
+    <span class="na">failOnStandardError</span><span class="pi">:</span> <span class="no">false</span>
+    <span class="na">azPSVersion</span><span class="pi">:</span> <span class="s">latest</span>
+</code></pre></div></div>
+
+<h2 id="multiple-versions-v1---v5">Multiple versions (v1 - v5)</h2>
+
+<ul>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>azureSubscription</td>
+          <td> </td>
+          <td>ConnectedServiceNameARM</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>Inline</li>
+  <li>ScriptArguments</li>
+  <li>ScriptPath</li>
+  <li>ScriptType</li>
+</ul>
+
+<h3 id="v1---v3">V1 - V3</h3>
+
+<ul>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>azureClassicSubscription</td>
+          <td> </td>
+          <td>ConnectedServiceName</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>azureConnectionType</td>
+          <td> </td>
+          <td>ConnectedServiceNameSelector</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ul>
+
+<h3 id="v2---v5">V2 - V5</h3>
+
+<ul>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>azurePowerShellVersion</td>
+          <td> </td>
+          <td>TargetAzurePS</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>azurePowerShellVersion</td>
+          <td> </td>
+          <td>CustomTargetAzurePs</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ul>
+
+<h3 id="v3---v5">V3 - V5</h3>
+
+<ul>
+  <li>errorActionPreference</li>
+  <li>FailOnStandardError</li>
+</ul>
+
+<h3 id="v4-and-v5">V4 and V5</h3>
+
+<ul>
+  <li>workingDirectory</li>
+</ul>
+
+<h2 id="unsupported-inputs-and-aliases">Unsupported Inputs and Aliases</h2>
+
+<ul>
+  <li>pwsh</li>
+  <li>RestrictContextToCurrentTask</li>
+</ul>
+
+
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+  </body>
+</html>
