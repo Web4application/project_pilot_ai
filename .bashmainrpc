@@ -1,0 +1,138 @@
+#!/usr/bin/env bash
+# .bashmainrpc — JSON-RPC HTTP AI Service
+# Author: Kubu Lee 🧠🔥
+
+set -euo pipefail
+
+# ========================
+#  CONFIG
+# ========================
+PORT=8088
+HOST="0.0.0.0"
+ENV_FILE=".env"
+TMP_LOG="/tmp/bashrpc.log"
+DATE=$(date '+%Y-%m-%d %H:%M:%S')
+
+# ========================
+#  ENV LOAD
+# ========================
+if [ -f "$ENV_FILE" ]; then
+  export $(grep -v '^#' "$ENV_FILE" | xargs)
+else
+  echo "❌ Missing .env file"
+  exit 1
+fi
+
+MODEL="${MODEL:-gpt-4o-mini}"
+AI_PROVIDER="${AI_PROVIDER:-openai}"
+AI_ENDPOINT="${AI_ENDPOINT:-https://api.openai.com/v1/chat/completions}"
+
+# ========================
+#  CORE FUNCTIONS
+# ========================
+ask_ai() {
+  local prompt="$1"
+  local response=""
+
+  echo "[$DATE] [AI] $prompt" >> "$TMP_LOG"
+
+  if [[ "$AI_PROVIDER" == "openai" ]]; then
+    response=$(curl -s "$AI_ENDPOINT" \
+      -H "Authorization: Bearer $GPT_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d "{
+        \"model\": \"$MODEL\",
+        \"messages\": [{\"role\": \"user\", \"content\": \"$prompt\"}]
+      }" | jq -r '.choices[0].message.content')
+  else
+    response=$(curl -s "$AI_ENDPOINT" \
+      -H "Content-Type: application/json" \
+      -d "{\"prompt\":\"$prompt\"}" | jq -r '.response')
+  fi
+
+  echo "$response"
+}
+
+sys_info() {
+  echo "{\"hostname\":\"$(hostname)\",\"uptime\":\"$(uptime -p)\",\"load\":\"$(uptime | awk -F'load average:' '{print $2}')\"}"
+}
+
+# ========================
+#  RPC HANDLER
+# ========================
+handle_rpc() {
+  local method="$1"
+  local data="$2"
+
+  case "$method" in
+    ai.ask)
+      ask_ai "$data"
+      ;;
+    sys.info)
+      sys_info
+      ;;
+    *)
+      echo "{\"error\":\"Unknown method: $method\"}"
+      ;;
+  esac
+}
+
+# ========================
+#  HTTP RESPONSE BUILDER
+# ========================
+http_response() {
+  local status="$1"
+  local body="$2"
+
+  echo -e "HTTP/1.1 $status\r"
+  echo -e "Content-Type: application/json\r"
+  echo -e "Access-Control-Allow-Origin: *\r"
+  echo -e "Access-Control-Allow-Headers: Content-Type\r"
+  echo -e "Access-Control-Allow-Methods: POST, GET, OPTIONS\r"
+  echo -e "\r"
+  echo "$body"
+}
+
+# ========================
+#  MAIN SERVER LOOP
+# ========================
+run_server() {
+  echo "🚀 BashMainRPC JSON-RPC Daemon started"
+  echo "🌐 Listening on http://$HOST:$PORT"
+  echo "🧠 Provider: $AI_PROVIDER ($MODEL)"
+  echo "📜 Logs: $TMP_LOG"
+
+  while true; do
+    # Listen for connections (HTTP POST JSON-RPC)
+    ncat -l "$HOST" "$PORT" -k -c '
+      read method
+      while read line && [ "$line" != $'\r' ]; do
+        headers="$headers$line\n"
+      done
+      body=$(cat)
+      req_method=$(echo "$body" | jq -r ".method")
+      req_data=$(echo "$body" | jq -r ".data")
+
+      if [ "$req_method" = "OPTIONS" ]; then
+        echo -e "HTTP/1.1 204 No Content\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Allow-Headers: Content-Type\r\nAccess-Control-Allow-Methods: POST, GET, OPTIONS\r\n\r"
+        exit 0
+      fi
+
+      response=$(./.bashmainrpc --call "$req_method" "$req_data" | jq -R -s "{result: .}")
+      ./bashrespond "$response"
+    '
+  done
+}
+
+# ========================
+#  LOCAL CALL MODE
+# ========================
+if [[ "${1:-}" == "--call" ]]; then
+  handle_rpc "$2" "$3"
+  exit 0
+fi
+
+# ========================
+#  RUN SERVER
+# ========================
+run_server
