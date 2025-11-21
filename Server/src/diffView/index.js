@@ -1,4 +1,4 @@
- // index.ts - Main entry point for the Monaco Editor diff view
+// index.ts - Main entry point for the Monaco Editor diff view
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import { initDiffEditor } from './js/monaco-diff-editor';
 import { setupUI } from './js/ui-controller';
