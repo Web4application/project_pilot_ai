@@ -7,29 +7,31 @@ import { z } from "zod";
 const logger = new MCPClientLogger();
 
 /**
- * Create and connect an MCP client for a given server.
+ * Create an MCP Client instance
  */
 export async function createClient(
   id: string,
-  config: ServerConfig
+  config: ServerConfig,
 ): Promise<Client> {
-  logger.info(`Starting Web4 MCP server client "${id}"...`);
-
-  const sanitizedEnv = {
-    ...Object.fromEntries(
-      Object.entries(process.env)
-        .filter(([, v]) => v !== undefined)
-        .map(([k, v]) => [k, v as string])
-    ),
-    ...(config.env ?? {})
-  };
+  logger.info(`Creating MCP client [${id}]...`);
 
   const transport = new StdioClientTransport({
     command: config.command,
     args: config.args,
-    env: sanitizedEnv,
+    env: {
+      // keep system env vars
+      ...Object.fromEntries(
+        Object.entries(process.env)
+          .filter(([_, v]) => v !== undefined)
+          .map(([k, v]) => [k, v as string]),
+      ),
+
+      // merge user-defined MCP env vars
+      ...(config.env || {}),
+    },
   });
 
+  // Updated name → web4-mcp-client
   const client = new Client(
     {
       name: `web4-mcp-client-${id}`,
@@ -37,38 +39,34 @@ export async function createClient(
     },
     {
       capabilities: {},
-    }
+    },
   );
 
   await client.connect(transport);
-  logger.info(`Web4 MCP client "${id}" connected.`);
-
   return client;
 }
 
 /**
- * Safely close the MCP client.
+ * Close and remove an MCP client
  */
-export async function removeClient(client: Client): Promise<void> {
-  logger.info("Closing Web4 MCP client...");
+export async function removeClient(client: Client) {
+  logger.info(`Closing MCP client...`);
   await client.close();
 }
 
 /**
- * List tools exposed by the MCP server.
+ * List available tools for the client
  */
 export async function listTools(client: Client): Promise<ListToolsResponse> {
-  logger.info("Fetching list of tools from Web4 MCP server...");
   return client.listTools();
 }
 
 /**
- * Execute an MCP tool request.
+ * Execute a request on an MCP server
  */
 export async function executeRequest(
   client: Client,
-  request: McpRequestMessage
+  request: McpRequestMessage,
 ) {
-  logger.info(`Executing request on Web4 MCP server: ${request.method}`);
   return client.request(request, z.any());
 }
