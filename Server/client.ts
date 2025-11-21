@@ -6,50 +6,69 @@ import { z } from "zod";
 
 const logger = new MCPClientLogger();
 
+/**
+ * Create and connect an MCP client for a given server.
+ */
 export async function createClient(
   id: string,
-  config: ServerConfig,
+  config: ServerConfig
 ): Promise<Client> {
-  logger.info(`Creating client for ${id}...`);
+  logger.info(`Starting Web4 MCP server client "${id}"...`);
+
+  const sanitizedEnv = {
+    ...Object.fromEntries(
+      Object.entries(process.env)
+        .filter(([, v]) => v !== undefined)
+        .map(([k, v]) => [k, v as string])
+    ),
+    ...(config.env ?? {})
+  };
 
   const transport = new StdioClientTransport({
     command: config.command,
     args: config.args,
-    env: {
-      ...Object.fromEntries(
-        Object.entries(process.env)
-          .filter(([_, v]) => v !== undefined)
-          .map(([k, v]) => [k, v as string]),
-      ),
-      ...(config.env || {}),
-    },
+    env: sanitizedEnv,
   });
 
   const client = new Client(
     {
-      name: `nextchat-mcp-client-${id}`,
+      name: `web4-mcp-client-${id}`,
       version: "1.0.0",
     },
     {
       capabilities: {},
-    },
+    }
   );
+
   await client.connect(transport);
+  logger.info(`Web4 MCP client "${id}" connected.`);
+
   return client;
 }
 
-export async function removeClient(client: Client) {
-  logger.info(`Removing client...`);
+/**
+ * Safely close the MCP client.
+ */
+export async function removeClient(client: Client): Promise<void> {
+  logger.info("Closing Web4 MCP client...");
   await client.close();
 }
 
+/**
+ * List tools exposed by the MCP server.
+ */
 export async function listTools(client: Client): Promise<ListToolsResponse> {
+  logger.info("Fetching list of tools from Web4 MCP server...");
   return client.listTools();
 }
 
+/**
+ * Execute an MCP tool request.
+ */
 export async function executeRequest(
   client: Client,
-  request: McpRequestMessage,
+  request: McpRequestMessage
 ) {
+  logger.info(`Executing request on Web4 MCP server: ${request.method}`);
   return client.request(request, z.any());
 }
