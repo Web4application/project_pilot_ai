@@ -9,7 +9,7 @@
 ## 🚀 Features
 
 ### 🔍 AI Codebase Analysis
-- Summarize entire repositories with GPT-4
+- Summarize entire repositories with GPT-5 families
 - Understand unfamiliar codebases in seconds
 
 ### ✨ Intelligent Refactoring (Pluggable)
@@ -53,7 +53,7 @@
 
 ## 🧱 Architecture
 
-```
+```bash
 project_pilot_ai/
 ├── ai_core/
 ├── cli/
@@ -63,6 +63,26 @@ project_pilot_ai/
 ├── voice/
 ├── .github/
 └── vscode-plugin/
+frontend/
+  src/
+    pages/
+      dashboard.jsx
+      studio.jsx
+      lmlm.jsx
+      preview.jsx
+      api_keys.jsx
+      admin.jsx
+    components/
+      Sidebar.jsx
+      Navbar.jsx
+      CodeEditor.jsx
+      Terminal.jsx
+      LivePreview.jsx
+      DatasetView.jsx
+      LMLMGraph.jsx
+    utils/
+      api.js
+      auth.js
 ```
 
 ## 📜 License
