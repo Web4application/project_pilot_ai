@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Powershell Task | project_pilot_ai</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Powershell Task" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Automated AI-Powered Project Management &amp; Code Intelligence" />
+<meta property="og:description" content="Automated AI-Powered Project Management &amp; Code Intelligence" />
+<link rel="canonical" href="https://web4application.github.io/project_pilot_ai/PowerShell.html" />
+<meta property="og:url" content="https://web4application.github.io/project_pilot_ai/PowerShell.html" />
+<meta property="og:site_name" content="project_pilot_ai" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Powershell Task" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Automated AI-Powered Project Management &amp; Code Intelligence","headline":"Powershell Task","url":"https://web4application.github.io/project_pilot_ai/PowerShell.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/project_pilot_ai/assets/css/style.css?v=8fed81b9e45dff6980506e760799cd2be0a42274">
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/project_pilot_ai/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="https://web4application.github.io/project_pilot_ai/">project_pilot_ai</a></h1>
+      
+
+      <h1 id="powershell-task">Powershell Task</h1>
+
+<h2 id="azure-devops-input">Azure DevOps Input</h2>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Run a PowerShell script on Linux, macOS, or Windows</span>
+<span class="pi">-</span> <span class="na">task</span><span class="pi">:</span> <span class="s">PowerShell@2</span>
+  <span class="na">inputs</span><span class="pi">:</span>
+    <span class="na">filePath</span><span class="pi">:</span> <span class="s">./build.ps1</span> <span class="c1"># Required when targetType == FilePath</span>
+    <span class="na">arguments</span><span class="pi">:</span> <span class="s1">'</span><span class="s">-Name</span><span class="nv"> </span><span class="s">someName</span><span class="nv"> </span><span class="s">-Path</span><span class="nv"> </span><span class="s">-Value</span><span class="nv"> </span><span class="s">"Some</span><span class="nv"> </span><span class="s">long</span><span class="nv"> </span><span class="s">string</span><span class="nv"> </span><span class="s">value"'</span> <span class="c1"># Optional</span>
+    <span class="c1">#targetType: 'filePath' # Optional. Options: filePath, inline</span>
+    <span class="c1">#script: '# Write your PowerShell commands here.Write-Host Hello World' # Required when targetType == Inline</span>
+    <span class="c1">#errorActionPreference: 'stop' # Optional. Options: stop, continue, silentlyContinue</span>
+    <span class="c1">#failOnStderr: false # Optional</span>
+    <span class="c1">#ignoreLASTEXITCODE: false # Optional</span>
+    <span class="c1">#pwsh: false # Optional</span>
+    <span class="c1">#workingDirectory: # Optional</span>
+</code></pre></div></div>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">powershell</span><span class="pi">:</span>  <span class="c1"># inline script</span>
+  <span class="na">workingDirectory</span><span class="pi">:</span>  <span class="c1">#</span>
+  <span class="na">displayName</span><span class="pi">:</span>  <span class="c1">#</span>
+  <span class="na">failOnStderr</span><span class="pi">:</span>  <span class="c1">#</span>
+  <span class="na">errorActionPreference</span><span class="pi">:</span>  <span class="c1">#</span>
+  <span class="na">warningPreference</span><span class="pi">:</span>  <span class="c1">#</span>
+  <span class="na">informationPreference</span><span class="pi">:</span>  <span class="c1">#</span>
+  <span class="na">verbosePreference</span><span class="pi">:</span>  <span class="c1">#</span>
+  <span class="na">debugPreference</span><span class="pi">:</span>  <span class="c1">#</span>
+  <span class="na">ignoreLASTEXITCODE</span><span class="pi">:</span>  <span class="c1">#</span>
+  <span class="na">env</span><span class="pi">:</span>  <span class="c1"># mapping of environment variables to add</span>
+</code></pre></div></div>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">pwsh</span><span class="pi">:</span>  <span class="c1"># inline script</span>
+  <span class="na">workingDirectory</span><span class="pi">:</span>  <span class="c1">#</span>
+  <span class="na">displayName</span><span class="pi">:</span>  <span class="c1">#</span>
+  <span class="na">failOnStderr</span><span class="pi">:</span>  <span class="c1">#</span>
+  <span class="na">errorActionPreference</span><span class="pi">:</span>  <span class="c1">#</span>
+  <span class="na">warningPreference</span><span class="pi">:</span>  <span class="c1">#</span>
+  <span class="na">informationPreference</span><span class="pi">:</span>  <span class="c1">#</span>
+  <span class="na">verbosePreference</span><span class="pi">:</span>  <span class="c1">#</span>
+  <span class="na">debugPreference</span><span class="pi">:</span>  <span class="c1">#</span>
+  <span class="na">ignoreLASTEXITCODE</span><span class="pi">:</span>  <span class="c1">#</span>
+  <span class="na">env</span><span class="pi">:</span>  <span class="c1"># mapping of environment variables to add</span>
+</code></pre></div></div>
+
+<h3 id="transformed-github-action">Transformed Github Action</h3>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">run</span><span class="pi">:</span> <span class="s">./build.ps1 -Name someName -Path -Value \"Some long string value\"</span>
+  <span class="na">shell</span><span class="pi">:</span> <span class="s">powershell</span>
+</code></pre></div></div>
+
+<h3 id="unsupported-inputs">Unsupported Inputs</h3>
+
+<ul>
+  <li>failOnStderr</li>
+  <li>warningPreference</li>
+  <li>informationPreference</li>
+  <li>verbosePreference</li>
+  <li>debugPreference</li>
+</ul>
+
+
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+  </body>
+</html>

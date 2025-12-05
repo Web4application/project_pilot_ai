@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Caching Strategies | project_pilot_ai</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Caching Strategies" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Automated AI-Powered Project Management &amp; Code Intelligence" />
+<meta property="og:description" content="Automated AI-Powered Project Management &amp; Code Intelligence" />
+<link rel="canonical" href="https://web4application.github.io/project_pilot_ai/caching-strategies.html" />
+<meta property="og:url" content="https://web4application.github.io/project_pilot_ai/caching-strategies.html" />
+<meta property="og:site_name" content="project_pilot_ai" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Caching Strategies" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Automated AI-Powered Project Management &amp; Code Intelligence","headline":"Caching Strategies","url":"https://web4application.github.io/project_pilot_ai/caching-strategies.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/project_pilot_ai/assets/css/style.css?v=8fed81b9e45dff6980506e760799cd2be0a42274">
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/project_pilot_ai/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="https://web4application.github.io/project_pilot_ai/">project_pilot_ai</a></h1>
+      
+
+      <h1 id="caching-strategies">Caching Strategies</h1>
+
+<p>This document lists some of the strategies (and example workflows if possible) which can be used to …</p>
+
+<ul>
+  <li>use an effective cache key and/or path</li>
+  <li>solve some common use cases around saving and restoring caches</li>
+  <li>leverage the step inputs and outputs more effectively</li>
+</ul>
+
+<h2 id="choosing-the-right-key">Choosing the right key</h2>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">build</span><span class="pi">:</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+    <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/cache@v3</span>
+      <span class="na">with</span><span class="pi">:</span>
+        <span class="na">key</span><span class="pi">:</span> <span class="s">$-cache</span>
+</code></pre></div></div>
+
+<p>In your workflows, you can use different strategies to name your key depending on your use case so that the cache is scoped appropriately for your need. For example, you can have cache specific to OS, or based on the lockfile or commit SHA or even workflow run.</p>
+
+<h3 id="updating-cache-for-any-change-in-the-dependencies">Updating cache for any change in the dependencies</h3>
+
+<p>One of the most common use case is to use hash for lockfile as key. This way, same cache will be restored for a lockfile until there’s a change in dependencies listed in lockfile.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/cache@v3</span>
+    <span class="na">with</span><span class="pi">:</span>
+      <span class="na">path</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="s">path/to/dependencies</span>
+        <span class="s">some/other/dependencies</span>
+      <span class="na">key</span><span class="pi">:</span> <span class="s">cache-$</span>
+</code></pre></div></div>
+
+<h3 id="using-restore-keys-to-download-the-closest-matching-cache">Using restore keys to download the closest matching cache</h3>
+
+<p>If cache is not found matching the primary key, restore keys can be used to download the closest matching cache that was recently created. This ensures that the build/install step will need to additionally fetch just a handful of newer dependencies, and hence saving build time.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/cache@v3</span>
+    <span class="na">with</span><span class="pi">:</span>
+      <span class="na">path</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="s">path/to/dependencies</span>
+        <span class="s">some/other/dependencies</span>
+      <span class="na">key</span><span class="pi">:</span> <span class="s">cache-npm-$</span>
+      <span class="na">restore-keys</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="s">cache-npm-</span>
+</code></pre></div></div>
+
+<p>The restore keys can be provided as a complete name, or a prefix, read more <a href="https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows#matching-a-cache-key">here</a> on how a cache key is matched using restore keys.</p>
+
+<h3 id="separate-caches-by-operating-system">Separate caches by Operating System</h3>
+
+<p>In case of workflows with matrix running for multiple Operating Systems, the caches can be stored separately for each of them. This can be used in combination with hashfiles in case multiple caches are being generated per OS.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/cache@v3</span>
+    <span class="na">with</span><span class="pi">:</span>
+      <span class="na">path</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="s">path/to/dependencies</span>
+        <span class="s">some/other/dependencies</span>
+      <span class="na">key</span><span class="pi">:</span> <span class="s">$-cache</span>
+</code></pre></div></div>
+
+<h3 id="creating-a-short-lived-cache">Creating a short lived cache</h3>
+
+<p>Caches scoped to the particular workflow run id or run attempt can be stored and referred by using the run id/attempt. This is an effective way to have a short lived cache.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="na">key</span><span class="pi">:</span> <span class="s">cache-$-$</span>
+</code></pre></div></div>
+
+<p>On similar lines, commit sha can be used to create a very specialized and short lived cache.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/cache@v3</span>
+    <span class="na">with</span><span class="pi">:</span>
+      <span class="na">path</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="s">path/to/dependencies</span>
+        <span class="s">some/other/dependencies</span>
+      <span class="na">key</span><span class="pi">:</span> <span class="s">cache-$</span>
+</code></pre></div></div>
+
+<h3 id="using-multiple-factors-while-forming-a-key-depening-on-the-need">Using multiple factors while forming a key depening on the need</h3>
+
+<p>Cache key can be formed by combination of more than one metadata, evaluated info.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/cache@v3</span>
+    <span class="na">with</span><span class="pi">:</span>
+      <span class="na">path</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="s">path/to/dependencies</span>
+        <span class="s">some/other/dependencies</span>
+      <span class="na">key</span><span class="pi">:</span> <span class="s">$-$</span>
+</code></pre></div></div>
+
+<p>The <a href="https://docs.github.com/en/actions/learn-github-actions/contexts#github-context">GitHub Context</a> can be used to create keys using the workflows metadata.</p>
+
+<h2 id="restoring-cache">Restoring Cache</h2>
+
+<h3 id="understanding-how-to-choose-path">Understanding how to choose path</h3>
+
+<p>While setting paths for caching dependencies it is important to give correct path depending on the hosted runner you are using or whether the action is running in a container job. Assigning different <code class="language-plaintext highlighter-rouge">path</code> for save and restore will result in cache miss.</p>
+
+<p>Below are GiHub hosted runner specific paths one should take care of when writing a workflow which saves/restores caches across OS.</p>
+
+<h4 id="ubuntu-paths">Ubuntu Paths</h4>
+
+<p>Home directory (<code class="language-plaintext highlighter-rouge">~/</code>) = <code class="language-plaintext highlighter-rouge">/home/runner</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">$</code> = <code class="language-plaintext highlighter-rouge">/home/runner/work/repo/repo</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">process.env['RUNNER_TEMP']</code>=<code class="language-plaintext highlighter-rouge">/home/runner/work/_temp</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">process.cwd()</code> = <code class="language-plaintext highlighter-rouge">/home/runner/work/repo/repo</code></p>
+
+<h4 id="windows-paths">Windows Paths</h4>
+
+<p>Home directory (<code class="language-plaintext highlighter-rouge">~/</code>) = <code class="language-plaintext highlighter-rouge">C:\Users\runneradmin</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">$</code> = <code class="language-plaintext highlighter-rouge">D:\a\repo\repo</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">process.env['RUNNER_TEMP']</code> = <code class="language-plaintext highlighter-rouge">D:\a\_temp</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">process.cwd()</code> = <code class="language-plaintext highlighter-rouge">D:\a\repo\repo</code></p>
+
+<h4 id="macos-paths">macOS Paths</h4>
+
+<p>Home directory (<code class="language-plaintext highlighter-rouge">~/</code>) = <code class="language-plaintext highlighter-rouge">/Users/runner</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">$</code> = <code class="language-plaintext highlighter-rouge">/Users/runner/work/repo/repo</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">process.env['RUNNER_TEMP']</code> = <code class="language-plaintext highlighter-rouge">/Users/runner/work/_temp</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">process.cwd()</code> = <code class="language-plaintext highlighter-rouge">/Users/runner/work/repo/repo</code></p>
+
+<p>Where:</p>
+
+<p><code class="language-plaintext highlighter-rouge">cwd()</code> = Current working directory where the repository code resides.</p>
+
+<p><code class="language-plaintext highlighter-rouge">RUNNER_TEMP</code> = Environment variable defined for temporary storage location.</p>
+
+<h3 id="make-cache-read-only--reuse-cache-from-centralized-job">Make cache read only / Reuse cache from centralized job</h3>
+
+<p>In case you are using a centralized job to create and save your cache that can be reused by other jobs in your repository, this action will take care of your restore only needs and make the cache read-only.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">steps</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v3</span>
+
+  <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/cache/restore@v3</span>
+    <span class="na">id</span><span class="pi">:</span> <span class="s">cache</span>
+    <span class="na">with</span><span class="pi">:</span>
+      <span class="na">path</span><span class="pi">:</span> <span class="s">path/to/dependencies</span>
+      <span class="na">key</span><span class="pi">:</span> <span class="s">$-$</span>
+
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Install Dependencies</span>
+    <span class="na">if</span><span class="pi">:</span> <span class="s">steps.cache.outputs.cache-hit != 'true'</span>
+    <span class="na">run</span><span class="pi">:</span> <span class="s">/install.sh</span>
+
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Build</span>
+    <span class="na">run</span><span class="pi">:</span> <span class="s">/build.sh</span>
+
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Publish package to public</span>
+    <span class="na">run</span><span class="pi">:</span> <span class="s">/publish.sh</span>
+</code></pre></div></div>
+
+<h3 id="failingexiting-the-workflow-if-cache-with-exact-key-is-not-found">Failing/Exiting the workflow if cache with exact key is not found</h3>
+
+<p>You can use the output of this action to exit the workflow on cache miss. This way you can restrict your workflow to only initiate the build when <code class="language-plaintext highlighter-rouge">cache-hit</code> occurs, in other words, cache with exact key is found.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">steps</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v3</span>
+
+  <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/cache/restore@v3</span>
+    <span class="na">id</span><span class="pi">:</span> <span class="s">cache</span>
+    <span class="na">with</span><span class="pi">:</span>
+      <span class="na">path</span><span class="pi">:</span> <span class="s">path/to/dependencies</span>
+      <span class="na">key</span><span class="pi">:</span> <span class="s">$-$</span>
+
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Check cache hit</span>
+    <span class="na">if</span><span class="pi">:</span> <span class="s">steps.cache.outputs.cache-hit != 'true'</span>
+    <span class="na">run</span><span class="pi">:</span> <span class="s">exit </span><span class="m">1</span>
+
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Build</span>
+    <span class="na">run</span><span class="pi">:</span> <span class="s">/build.sh</span>
+</code></pre></div></div>
+
+<h2 id="saving-cache">Saving cache</h2>
+
+<h3 id="reusing-primary-key-from-restore-cache-as-input-to-save-action">Reusing primary key from restore cache as input to save action</h3>
+
+<p>If you want to avoid re-computing the cache key again in <code class="language-plaintext highlighter-rouge">save</code> action, the outputs from <code class="language-plaintext highlighter-rouge">restore</code> action can be used as input to the <code class="language-plaintext highlighter-rouge">save</code> action.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/cache/restore@v3</span>
+    <span class="na">id</span><span class="pi">:</span> <span class="s">restore-cache</span>
+    <span class="na">with</span><span class="pi">:</span>
+      <span class="na">path</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="s">path/to/dependencies</span>
+        <span class="s">some/other/dependencies</span>
+      <span class="na">key</span><span class="pi">:</span> <span class="s">$-$</span>
+  <span class="s">.</span>
+  <span class="s">.</span>
+  <span class="s">.</span>
+  <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/cache/save@v3</span>
+    <span class="na">with</span><span class="pi">:</span>
+      <span class="na">path</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="s">path/to/dependencies</span>
+        <span class="s">some/other/dependencies</span>
+      <span class="na">key</span><span class="pi">:</span> <span class="s">$</span>
+</code></pre></div></div>
+
+<h3 id="re-evaluate-cache-key-while-saving-cache">Re-evaluate cache key while saving cache</h3>
+
+<p>On the other hand, the key can also be explicitly re-computed while executing the save action. This helps in cases where the lockfiles are generated during the build.</p>
+
+<p>Let’s say we have a restore step that computes key at runtime</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">uses</span><span class="pi">:</span> <span class="s">actions/cache/restore@v3</span>
+<span class="na">id</span><span class="pi">:</span> <span class="s">restore-cache</span>
+<span class="na">with</span><span class="pi">:</span>
+    <span class="na">key</span><span class="pi">:</span> <span class="s">cache-$</span>
+</code></pre></div></div>
+
+<p>Case 1: Where an user would want to reuse the key as it is</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">uses</span><span class="pi">:</span> <span class="s">actions/cache/save@v3</span>
+<span class="na">with</span><span class="pi">:</span>
+    <span class="na">key</span><span class="pi">:</span> <span class="s">$</span>
+</code></pre></div></div>
+
+<p>Case 2: Where the user would want to re-evaluate the key</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">uses</span><span class="pi">:</span> <span class="s">actions/cache/save@v3</span>
+<span class="na">with</span><span class="pi">:</span>
+    <span class="na">key</span><span class="pi">:</span> <span class="s">npm-cache-$</span>
+</code></pre></div></div>
+
+<h3 id="saving-cache-even-if-the-build-fails">Saving cache even if the build fails</h3>
+
+<p>There can be cases where a cache should be saved even if the build job fails. For example, a job can fail due to flaky tests but the caches can still be re-used. You can use <code class="language-plaintext highlighter-rouge">actions/cache/save</code> action to save the cache by using <code class="language-plaintext highlighter-rouge">if: always()</code> condition.</p>
+
+<p>Similarly, <code class="language-plaintext highlighter-rouge">actions/cache/save</code> action can be conditionally used based on the output of the previous steps. This way you get more control on when to save the cache.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">steps</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v3</span>
+  <span class="s">.</span>
+  <span class="s">. // restore if need be</span>
+  <span class="s">.</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Build</span>
+    <span class="na">run</span><span class="pi">:</span> <span class="s">/build.sh</span>
+  <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/cache/save@v3</span>
+    <span class="na">if</span><span class="pi">:</span> <span class="s">always() // or any other condition to invoke the save action</span>
+    <span class="na">with</span><span class="pi">:</span>
+      <span class="na">path</span><span class="pi">:</span> <span class="s">path/to/dependencies</span>
+      <span class="na">key</span><span class="pi">:</span> <span class="s">$-$</span>
+</code></pre></div></div>
+
+<h3 id="saving-cache-once-and-reusing-in-multiple-workflows">Saving cache once and reusing in multiple workflows</h3>
+
+<p>In case of multi-module projects, where the built artifact of one project needs to be reused in subsequent child modules, the need of rebuilding the parent module again and again with every build can be eliminated. The <code class="language-plaintext highlighter-rouge">actions/cache</code> or <code class="language-plaintext highlighter-rouge">actions/cache/save</code> action can be used to build and save the parent module artifact once, and restored multiple times while building the child modules.</p>
+
+<h4 id="step-1---build-the-parent-module-and-save-it">Step 1 - Build the parent module and save it</h4>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">steps</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v3</span>
+
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Build</span>
+    <span class="na">run</span><span class="pi">:</span> <span class="s">./build-parent-module.sh</span>
+
+  <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/cache/save@v3</span>
+    <span class="na">id</span><span class="pi">:</span> <span class="s">cache</span>
+    <span class="na">with</span><span class="pi">:</span>
+      <span class="na">path</span><span class="pi">:</span> <span class="s">path/to/dependencies</span>
+      <span class="na">key</span><span class="pi">:</span> <span class="s">$-$</span>
+</code></pre></div></div>
+
+<h4 id="step-2---restore-the-built-artifact-from-cache-using-the-same-key-and-path">Step 2 - Restore the built artifact from cache using the same key and path</h4>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">steps</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v3</span>
+
+  <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/cache/restore@v3</span>
+    <span class="na">id</span><span class="pi">:</span> <span class="s">cache</span>
+    <span class="na">with</span><span class="pi">:</span>
+      <span class="na">path</span><span class="pi">:</span> <span class="s">path/to/dependencies</span>
+      <span class="na">key</span><span class="pi">:</span> <span class="s">$-$</span>
+
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Install Dependencies</span>
+    <span class="na">if</span><span class="pi">:</span> <span class="s">steps.cache.outputs.cache-hit != 'true'</span>
+    <span class="na">run</span><span class="pi">:</span> <span class="s">./install.sh</span>
+      
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Build</span>
+    <span class="na">run</span><span class="pi">:</span> <span class="s">./build-child-module.sh</span>
+
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Publish package to public</span>
+    <span class="na">run</span><span class="pi">:</span> <span class="s">./publish.sh</span>
+</code></pre></div></div>
+
+
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+  </body>
+</html>
