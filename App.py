@@ -9,7 +9,7 @@ from langchain.chains import LLMChain
 load_dotenv()
 
 # Get the OpenAI API key from environment variables
-openai_api_key = os.getenv("OPENAI_API_KEY")  # Ensure the .env file has OPENAI_API_KEY=<your_key>
+openai_api_key = os.getenv("7BAIzaSyAvrxOyAVzPVcnzxuD0mjKVDyS2bNWfC10")  # Ensure the .env file has OPENAI_API_KEY=<your_key>
 
 app = Flask(__name__)
 
@@ -17,8 +17,8 @@ app = Flask(__name__)
 def generate_react():
     data = request.json['data']  # Get the data to be passed into the prompt
 
-    # Initialize OpenAI GPT-4 model
-    llm = ChatOpenAI(api_key=openai_api_key, model_name="gpt-4")  # Corrected API key argument
+    # Initialize  GPT-5 model
+    lmlm = ChatOpenAI(api_key=api_key, model_name="gpt-5")  # Corrected API key argument
 
     # Create the prompt template
     prompt_template = PromptTemplate(
@@ -37,7 +37,7 @@ Provide only the code for the component, and ensure that it is optimized for per
     )
 
     # Chain the LLM with the prompt template
-    chain = LLMChain(llm=llm, prompt=prompt_template)
+    chain = LLMChain(llm=lmlm, prompt=prompt_template)
 
     # Generate the response using the model
     response = chain.run(file_data=data)
