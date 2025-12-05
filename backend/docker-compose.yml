@@ -1,0 +1,57 @@
+version: "3.9"
+
+services:
+
+  api:
+    build: ./backend
+    container_name: pilotai_api
+    restart: always
+    env_file: ./backend/.env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - pilotai_net
+
+  frontend:
+    build: ./frontend
+    container_name: pilotai_frontend
+    restart: always
+    ports:
+      - "3000:80"
+    networks:
+      - pilotai_net
+
+  redis:
+    image: redis:7
+    container_name: pilotai_redis
+    networks:
+      - pilotai_net
+
+  postgres:
+    image: postgres:15
+    container_name: pilotai_pg
+    env_file: ./backend/.env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - pilotai_net
+
+  worker:
+    build: ./backend
+    container_name: pilotai_worker
+    command: ["python", "worker.py"]
+    env_file: ./backend/.env
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - pilotai_net
+
+networks:
+  pilotai_net:
+
+volumes:
+  pgdata:
