@@ -1,49 +1,68 @@
 from flask import Flask, request, jsonify
 import os
 from dotenv import load_dotenv
-from langchain.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 
-# Load environment variables from a .env file
+# Load environment variables
 load_dotenv()
 
-# Get the OpenAI API key from environment variables
-openai_api_key = os.getenv("7BAIzaSyAvrxOyAVzPVcnzxuD0mjKVDyS2bNWfC10")  # Ensure the .env file has OPENAI_API_KEY=<your_key>
+# Get API key
+openai_api_key = os.getenv("OPENAI_API_KEY")
+
+if not openai_api_key:
+    raise ValueError("❌ OPENAI_API_KEY not found in environment variables!")
 
 app = Flask(__name__)
 
 @app.route('/generate_react', methods=['POST'])
 def generate_react():
-    data = request.json['data']  # Get the data to be passed into the prompt
+    try:
+        data = request.json.get("data", "")
 
-    # Initialize  GPT-5 model
-    lmlm = ChatOpenAI(api_key=api_key, model_name="gpt-5")  # Corrected API key argument
+        if not data:
+            return jsonify({"error": "No data provided"}), 400
 
-    # Create the prompt template
-    prompt_template = PromptTemplate(
-        input_variables=["file_data"],
-        template="""
-You are an AI assistant that helps developers build UI components.
+        # Initialize GPT-5
+        llm = ChatOpenAI(
+            api_key=openai_api_key,
+            model="gpt-5",          # modern param name
+            temperature=0.2
+        )
 
-Given the following data:
+        # Prompt template
+        prompt = PromptTemplate(
+            input_variables=["file_data"],
+            template="""
+You are an elite frontend engineering assistant.
+
+Given the dataset:
 
 {file_data}
 
-Generate a React component to display the data in a user-friendly table with sorting and filtering capabilities.
+Generate a **React component** that:
 
-Provide only the code for the component, and ensure that it is optimized for performance.
+- Displays the data in a clean table UI
+- Has sorting on each column
+- Provides a search-based filter
+- Uses modern React with hooks and functional components
+- Avoids unnecessary re-renders (optimize performance)
+- NO explanations, ONLY the code.
+
+Output ONLY valid React code.
 """
-    )
+        )
 
-    # Chain the LLM with the prompt template
-    chain = LLMChain(llm=lmlm, prompt=prompt_template)
+        chain = LLMChain(prompt=prompt, llm=llm)
 
-    # Generate the response using the model
-    response = chain.run(file_data=data)
+        response = chain.invoke({"file_data": data})
 
-    # Return the generated code
-    return jsonify({"generated_code": response})
+        return jsonify({"generated_code": response["text"]})
 
-if __name__ == '__main__':
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+if __name__ == "__main__":
     app.run(debug=True)
