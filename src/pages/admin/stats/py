@@ -1,0 +1,8 @@
+@app.get("/admin/stats")
+async def stats():
+    users = db.fetch("SELECT COUNT(*) FROM users")
+    req = redis.get("requests_today")
+    return {
+        "users": users,
+        "requests_today": req
+    }
