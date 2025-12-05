@@ -1,10 +1,9 @@
 ---
-tittle:page
-layout:site
+tittle: page
+layout: site
 features:
-author:kubu
+author: kubu lee
 ---
-
 <!-- Header -->
 <div class="header">
     <div class="logo">SCTM-for-Life</div>
