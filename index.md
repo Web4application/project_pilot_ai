@@ -1,7 +1,7 @@
 ---
-tittle: page
-layout: site
-features:
+tittle: pilotAI
+layout: pages
+features: https://web4application.github.io/project_pilot_ai/#features
 author: kubu lee
 ---
 <!-- Header -->
@@ -18,7 +18,6 @@ author: kubu lee
         <h2>Input Panel</h2>
         <textarea id="sctm-input" placeholder="Type SCTM symbols here..."></textarea>
     </div>
-
     <!-- Visualization Panel -->
     <div class="panel viz-panel">
         <h2>Visualization Panel</h2>
@@ -29,7 +28,7 @@ author: kubu lee
 
 <!-- Execution / Output Console -->j
 <div class="panel console-panel">
-    <h2>Execution Console</h2>
+       <h2>Execution Console</h2>
     <pre id="execution-output">{}</pre>
 </div>
 <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -37,4 +36,6 @@ author: kubu lee
 </body>
 <script src="app.js"></script>
 </html>
-
+<document>
+https://web4application.github.io/project_pilot_ai.git
+</document>
