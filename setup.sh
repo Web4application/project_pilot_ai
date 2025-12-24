@@ -15,3 +15,5 @@ echo "👉 To run the dashboard:"
 echo "   make run-dashboard"
 
 npx vscode-dts dev
+
+npm install -g @github/copilot
