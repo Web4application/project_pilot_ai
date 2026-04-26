@@ -1,12 +1,12 @@
 ---
-sidebar_position: 5
+sidebar_position: 
 ---
 
 # Characters & text
 
 ## Characters
 
-The `Char` type in Motoko represents a single Unicode character delimited with a single quotation mark (`'`).
+The `Char` type in  represents a single Unicode character delimited with a single quotation mark (`'`).
 
 ```motoko
 let letter : Char = 'A';
@@ -20,7 +20,7 @@ let symbol : Char = '✮';
 :::info [Iter](https://internetcomputer.org/docs/motoko/core/Iter)
 An `Iter<T>` is an object that sequentially produces values of specified type `T` until no more values remain.
 :::
-``` motoko
+```mo
 import Char "mo:core/Char";
 
 func reverse(t: Text) : Text {
@@ -87,7 +87,7 @@ let greeting : Text = "Hello, world!";
 
 The `#` operator concatenates two `Text` values:
 
-``` motoko
+```mo
 // Concatenating text
 
 "ICP " # "❤️" # " Motoko" // "ICP ❤️ Motoko"
